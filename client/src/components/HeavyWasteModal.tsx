@@ -1,9 +1,10 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { AlertTriangle, Info, X } from "lucide-react";
+import { AlertTriangle, Info, X, Loader2 } from "lucide-react";
 import { useBooking, HeavyWasteType, HeavyWastePercentage } from "@/contexts/BookingContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getSkipImageForPercentage } from "@/assets/skip-images";
+import { getSkipsByLocation, getHeavyWasteTypes, getHeavyWastePercentages, ApiSkip, HeavyWasteInfo } from "@/services/api";
 
 interface HeavyWasteModalProps {
   isOpen: boolean;
@@ -32,8 +33,48 @@ const percentageDescriptions: Record<HeavyWastePercentage, string> = {
 
 export function HeavyWasteModal({ isOpen, onClose, onConfirm }: HeavyWasteModalProps) {
   const { bookingState, toggleHeavyWasteType, setHeavyWastePercentage } = useBooking();
-  const [showDetails, setShowDetails] = useState(false);
+  
+  // Stati per i dati caricati dalle API
+  const [skips, setSkips] = useState<ApiSkip[]>([]);
+  const [wasteTypes, setWasteTypes] = useState<HeavyWasteInfo[]>([]);
+  const [percentages, setPercentages] = useState<{id: string, name: string, description: string}[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  
+  // Carica i dati dalle API
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        
+        // Carica gli skip dalla posizione predefinita (Lowestoft)
+        const skipsData = await getSkipsByLocation("NR32", "Lowestoft");
+        setSkips(skipsData);
+        
+        // Carica i tipi di rifiuti pesanti
+        const wasteTypesData = await getHeavyWasteTypes();
+        setWasteTypes(wasteTypesData);
+        
+        // Carica le percentuali
+        const percentagesData = await getHeavyWastePercentages();
+        setPercentages(percentagesData);
+        
+        setLoading(false);
+      } catch (err) {
+        console.error("Error loading data:", err);
+        setError("Failed to load data. Please try again.");
+        setLoading(false);
+      }
+    };
+    
+    if (isOpen) {
+      fetchData();
+    }
+  }, [isOpen]);
 
+  // Filtra gli skip che accettano rifiuti pesanti
+  const skipsWithHeavyWaste = skips.filter(skip => skip.allows_heavy_waste);
+  
   const heavyWasteTypes: HeavyWasteType[] = [
     "Soil", "Concrete", "Bricks", "Tiles", "Sand", "Gravel", "Rubble"
   ];
@@ -203,6 +244,42 @@ export function HeavyWasteModal({ isOpen, onClose, onConfirm }: HeavyWasteModalP
             </div>
           </div>
         )}
+        
+        {/* Available Skips for Heavy Waste */}
+        <div className="mb-6">
+          <label className="block text-sm font-medium mb-3 text-white">Skips available for heavy waste:</label>
+          
+          {loading && (
+            <div className="flex items-center justify-center p-6 bg-gray-900 rounded-lg">
+              <Loader2 className="h-6 w-6 text-primary animate-spin mr-2" />
+              <span className="text-sm text-white">Loading skip data...</span>
+            </div>
+          )}
+          
+          {error && (
+            <div className="p-4 bg-red-900/30 border-l-4 border-red-500 rounded">
+              <p className="text-sm text-white">{error}</p>
+            </div>
+          )}
+          
+          {!loading && !error && skipsWithHeavyWaste.length === 0 && (
+            <div className="p-4 bg-gray-900 rounded-lg">
+              <p className="text-sm text-white">No skips available for heavy waste at this location.</p>
+            </div>
+          )}
+          
+          {!loading && !error && skipsWithHeavyWaste.length > 0 && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+              {skipsWithHeavyWaste.map(skip => (
+                <div key={skip.id} className="bg-gray-900 rounded-lg p-3">
+                  <div className="font-medium text-white">{skip.size} Yard Skip</div>
+                  <div className="text-xs text-gray-400">£{skip.price_before_vat + (skip.price_before_vat * skip.vat / 100)} (inc. VAT)</div>
+                  <div className="text-xs text-gray-400">{skip.hire_period_days} days hire</div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
         
         {/* Current Selection Status */}
         <div className="text-sm text-white mb-6">{getSummaryText()}</div>
