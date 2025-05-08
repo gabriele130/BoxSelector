@@ -38,11 +38,11 @@ export function WasteTypeCard({
 
   return (
     <div
-      className={`relative bg-gray-800 border ${
+      className={`relative bg-black border ${
         isSelected
-          ? "border-2 border-primary bg-primary-900/10"
+          ? "border-2 border-primary bg-black"
           : "border-gray-700"
-      } rounded-lg p-5 transition-all hover:border-primary hover:bg-opacity-80 cursor-pointer`}
+      } rounded-lg p-5 transition-all hover:border-primary cursor-pointer`}
       onClick={onToggle}
       data-waste-type={type}
     >
@@ -56,18 +56,18 @@ export function WasteTypeCard({
             isSelected ? "bg-primary-800/50" : "bg-gray-700"
           } flex items-center justify-center`}
         >
-          <div className={isSelected ? "text-primary-300" : "text-gray-300"}>
+          <div className={isSelected ? "text-white" : "text-white"}>
             {getIcon()}
           </div>
         </div>
         
         <div>
-          <h3 className="font-medium text-lg">{title}</h3>
-          <p className="text-sm text-gray-400 mb-3">{description}</p>
+          <h3 className="font-medium text-lg text-white">{title}</h3>
+          <p className="text-sm text-gray-300 mb-3">{description}</p>
           
           <div className="grid grid-cols-2 gap-x-4 gap-y-1">
             {examples.map((example, index) => (
-              <div key={index} className="text-xs text-gray-400 flex items-center">
+              <div key={index} className="text-xs text-gray-300 flex items-center">
                 <span className="mr-1.5">•</span> {example}
               </div>
             ))}

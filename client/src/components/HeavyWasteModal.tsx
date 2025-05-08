@@ -47,10 +47,10 @@ export function HeavyWasteModal({ isOpen, onClose, onConfirm }: HeavyWasteModalP
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="bg-gray-900 border-gray-800 sm:max-w-2xl">
+      <DialogContent className="bg-black border-gray-800 sm:max-w-2xl">
         <DialogHeader>
           <div className="flex justify-between items-center">
-            <DialogTitle className="text-xl font-bold">Heavy Waste Types</DialogTitle>
+            <DialogTitle className="text-xl font-bold text-white">Heavy Waste Types</DialogTitle>
             <Button variant="ghost" size="icon" onClick={onClose}>
               <X className="h-5 w-5 text-gray-400 hover:text-white" />
             </Button>
@@ -64,7 +64,7 @@ export function HeavyWasteModal({ isOpen, onClose, onConfirm }: HeavyWasteModalP
               <AlertTriangle className="h-5 w-5 text-amber-500" />
             </div>
             <div className="ml-3">
-              <p className="text-sm text-amber-200">
+              <p className="text-sm text-white">
                 Heavy waste types have specific requirements and restrictions. Some skip sizes may not be available for heavy waste disposal.
               </p>
             </div>
@@ -73,7 +73,7 @@ export function HeavyWasteModal({ isOpen, onClose, onConfirm }: HeavyWasteModalP
         
         {/* Heavy Waste Type Selection */}
         <div className="mb-6">
-          <label className="block text-sm font-medium mb-3">Select heavy waste types:</label>
+          <label className="block text-sm font-medium mb-3 text-white">Select heavy waste types:</label>
           <div className="flex flex-wrap gap-2">
             {heavyWasteTypes.map((wasteType) => (
               <Button
@@ -86,7 +86,7 @@ export function HeavyWasteModal({ isOpen, onClose, onConfirm }: HeavyWasteModalP
                 className={`px-4 py-2 rounded-full text-sm ${
                   bookingState.heavyWasteTypes.includes(wasteType)
                     ? "bg-primary text-white"
-                    : "bg-gray-800 hover:bg-gray-700 text-gray-300"
+                    : "bg-gray-800 hover:bg-gray-700 text-white"
                 }`}
                 onClick={() => handleHeavyWasteTypeToggle(wasteType)}
               >
@@ -98,7 +98,7 @@ export function HeavyWasteModal({ isOpen, onClose, onConfirm }: HeavyWasteModalP
         
         {/* Percentage Selection */}
         <div className="mb-6">
-          <label className="block text-sm font-medium mb-3">Approximate percentage of heavy waste:</label>
+          <label className="block text-sm font-medium mb-3 text-white">Approximate percentage of heavy waste:</label>
           <div className="flex flex-wrap gap-2">
             {percentageOptions.map((percentage) => (
               <Button
@@ -111,7 +111,7 @@ export function HeavyWasteModal({ isOpen, onClose, onConfirm }: HeavyWasteModalP
                 className={`px-4 py-2 rounded-full text-sm ${
                   bookingState.heavyWastePercentage === percentage
                     ? "bg-primary-700 text-white"
-                    : "bg-gray-800 hover:bg-gray-700 text-gray-300"
+                    : "bg-gray-800 hover:bg-gray-700 text-white"
                 }`}
                 onClick={() => handlePercentageSelect(percentage)}
               >
@@ -125,11 +125,11 @@ export function HeavyWasteModal({ isOpen, onClose, onConfirm }: HeavyWasteModalP
         <div className="bg-primary-900/30 border border-primary-800 rounded-lg p-4 mb-6">
           <div className="flex">
             <div className="flex-shrink-0">
-              <Info className="h-5 w-5 text-primary-400" />
+              <Info className="h-5 w-5 text-white" />
             </div>
             <div className="ml-3">
-              <p className="text-sm text-gray-300">Skip Size Restrictions</p>
-              <p className="text-xs text-gray-400 mt-1">
+              <p className="text-sm text-white">Skip Size Restrictions</p>
+              <p className="text-xs text-white mt-1">
                 For safety reasons, heavy waste can only be disposed of in skips up to 8 yards. Larger skips will not be available if heavy waste is selected.
               </p>
             </div>
@@ -137,13 +137,13 @@ export function HeavyWasteModal({ isOpen, onClose, onConfirm }: HeavyWasteModalP
         </div>
         
         {/* Current Selection Status */}
-        <div className="text-sm text-gray-400 mb-6">{getSummaryText()}</div>
+        <div className="text-sm text-white mb-6">{getSummaryText()}</div>
         
         {/* Action Buttons */}
         <DialogFooter>
           <Button
             variant="outline"
-            className="px-4 py-2 border border-gray-700 rounded-md text-gray-300 hover:bg-gray-800"
+            className="px-4 py-2 border border-gray-700 rounded-md text-white hover:bg-gray-800"
             onClick={onClose}
           >
             Cancel

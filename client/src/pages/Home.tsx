@@ -41,7 +41,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-black">
       <Header />
       
       <main className="flex-grow">
@@ -49,21 +49,21 @@ export default function Home() {
           <ProgressStepper currentStep={bookingState.currentStep} />
           
           <div className="mt-12">
-            <h2 className="text-2xl font-semibold text-center mb-6">
+            <h2 className="text-2xl font-semibold text-center mb-6 text-white">
               Which type of waste best describes what you are disposing of?
             </h2>
             
             {/* Information Panel */}
-            <div className="bg-gray-800 border border-gray-700 rounded-lg p-4 mb-8">
+            <div className="bg-gray-900 border border-gray-700 rounded-lg p-4 mb-8">
               <div className="flex items-start">
                 <div className="flex-shrink-0 mt-0.5">
                   <Info className="h-5 w-5 text-primary" />
                 </div>
                 <div className="ml-3">
-                  <p className="text-sm text-gray-300">
+                  <p className="text-sm text-white">
                     You can select multiple waste types. Some items may require special handling:
                   </p>
-                  <ul className="mt-2 text-sm text-gray-300 list-disc list-inside space-y-1">
+                  <ul className="mt-2 text-sm text-white list-disc list-inside space-y-1">
                     <li>Plasterboard and drywall materials</li>
                     <li>Heavy construction materials (soil, concrete, etc.)</li>
                   </ul>

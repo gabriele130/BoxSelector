@@ -101,7 +101,7 @@ export default function SelectSkip() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-black">
       <Header />
       
       <main className="flex-grow">
@@ -109,7 +109,7 @@ export default function SelectSkip() {
           <ProgressStepper currentStep={bookingState.currentStep} />
           
           <div className="mt-12">
-            <h2 className="text-2xl font-semibold text-center mb-6">
+            <h2 className="text-2xl font-semibold text-center mb-6 text-white">
               Select the skip size you need
             </h2>
             
@@ -121,7 +121,7 @@ export default function SelectSkip() {
                     <Info className="h-5 w-5 text-amber-500" />
                   </div>
                   <div className="ml-3">
-                    <p className="text-sm text-amber-200">
+                    <p className="text-sm text-white">
                       Due to heavy waste selection, only skips up to 8 yards are available.
                       Larger skips cannot be used for heavy waste disposal for safety reasons.
                     </p>
@@ -137,26 +137,26 @@ export default function SelectSkip() {
                   key={skip.id}
                   className={`cursor-pointer transition-all border-2 ${
                     selectedSkip === skip.id
-                      ? "border-primary bg-primary/5"
-                      : "border-gray-700 bg-gray-800"
+                      ? "border-primary bg-black"
+                      : "border-gray-700 bg-black"
                   } hover:border-primary/70`}
                   onClick={() => handleSkipSelect(skip.id)}
                 >
                   <CardHeader className="pb-2">
                     <div className="flex justify-between items-start">
-                      <CardTitle className="text-lg font-semibold">{skip.name}</CardTitle>
+                      <CardTitle className="text-lg font-semibold text-white">{skip.name}</CardTitle>
                       <div className="text-xl font-bold text-primary">{skip.price}</div>
                     </div>
-                    <CardDescription>{skip.bestFor}</CardDescription>
+                    <CardDescription className="text-gray-300">{skip.bestFor}</CardDescription>
                   </CardHeader>
                   <CardContent className="pb-4">
                     <div className="flex items-center justify-between mb-4">
-                      <div className="text-primary/80">{skip.image}</div>
+                      <div className="text-white">{skip.image}</div>
                       <div className="text-sm">
-                        <div className="mb-1"><span className="text-gray-400">Capacity:</span> {skip.capacity}</div>
+                        <div className="mb-1"><span className="text-gray-400">Capacity:</span> <span className="text-white">{skip.capacity}</span></div>
                       </div>
                     </div>
-                    <p className="text-sm text-gray-300">{skip.description}</p>
+                    <p className="text-sm text-white">{skip.description}</p>
                     {skip.restrictions && (
                       <p className="mt-2 text-xs text-amber-300 font-medium">{skip.restrictions}</p>
                     )}
@@ -164,7 +164,7 @@ export default function SelectSkip() {
                   <CardFooter className="pt-0">
                     <Button 
                       variant={selectedSkip === skip.id ? "default" : "outline"} 
-                      className="w-full"
+                      className={`w-full ${selectedSkip === skip.id ? "bg-primary text-white" : "text-white"}`}
                       onClick={() => handleSkipSelect(skip.id)}
                     >
                       {selectedSkip === skip.id ? "Selected" : "Select"}
