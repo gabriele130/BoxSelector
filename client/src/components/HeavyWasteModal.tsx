@@ -1,7 +1,9 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { AlertTriangle, Info, X } from "lucide-react";
 import { useBooking, HeavyWasteType, HeavyWastePercentage } from "@/contexts/BookingContext";
+import { useState } from "react";
+import { getSkipImageForPercentage } from "@/assets/skip-images";
 
 interface HeavyWasteModalProps {
   isOpen: boolean;
@@ -9,8 +11,28 @@ interface HeavyWasteModalProps {
   onConfirm: () => void;
 }
 
+// Descrizioni dettagliate dei tipi di rifiuti pesanti
+const heavyWasteDescriptions: Record<HeavyWasteType, string> = {
+  "Soil": "Including topsoil and subsoil",
+  "Concrete": "Blocks, slabs, and foundations",
+  "Bricks": "Whole or broken bricks",
+  "Tiles": "Ceramic, porcelain, or stone tiles",
+  "Sand": "Building or garden sand",
+  "Gravel": "Stone and aggregate",
+  "Rubble": "Mixed building debris"
+};
+
+// Descrizioni per le percentuali
+const percentageDescriptions: Record<HeavyWastePercentage, string> = {
+  "No heavy waste": "No heavy waste in your skip",
+  "Up to 5%": "A small amount of heavy waste",
+  "5-20%": "A moderate amount of heavy waste",
+  "Over 20%": "A large amount of heavy waste"
+};
+
 export function HeavyWasteModal({ isOpen, onClose, onConfirm }: HeavyWasteModalProps) {
   const { bookingState, toggleHeavyWasteType, setHeavyWastePercentage } = useBooking();
+  const [showDetails, setShowDetails] = useState(false);
 
   const heavyWasteTypes: HeavyWasteType[] = [
     "Soil", "Concrete", "Bricks", "Tiles", "Sand", "Gravel", "Rubble"
@@ -50,7 +72,12 @@ export function HeavyWasteModal({ isOpen, onClose, onConfirm }: HeavyWasteModalP
       <DialogContent className="bg-black border-gray-800 sm:max-w-2xl">
         <DialogHeader>
           <div className="flex justify-between items-center">
-            <DialogTitle className="text-xl font-bold text-white">Heavy Waste Types</DialogTitle>
+            <div>
+              <DialogTitle className="text-xl font-bold text-white">Heavy Waste Types</DialogTitle>
+              <DialogDescription className="text-sm text-gray-400">
+                Specify the types and amount of heavy waste in your skip
+              </DialogDescription>
+            </div>
             <Button variant="ghost" size="icon" onClick={onClose}>
               <X className="h-5 w-5 text-gray-400 hover:text-white" />
             </Button>
@@ -135,6 +162,47 @@ export function HeavyWasteModal({ isOpen, onClose, onConfirm }: HeavyWasteModalP
             </div>
           </div>
         </div>
+        
+        {/* Percentage description */}
+        {bookingState.heavyWastePercentage !== "No heavy waste" && (
+          <div className="text-sm text-white mb-2">
+            {percentageDescriptions[bookingState.heavyWastePercentage]}
+          </div>
+        )}
+        
+        {/* Visual representation */}
+        {bookingState.heavyWastePercentage !== "No heavy waste" && (
+          <div className="mb-6">
+            <label className="block text-sm font-medium mb-3 text-white">Visual representation:</label>
+            <div className="bg-gray-900 rounded-lg overflow-hidden">
+              <div className="relative">
+                <img 
+                  src={getSkipImageForPercentage(bookingState.heavyWastePercentage)}
+                  alt={`Skip with ${bookingState.heavyWastePercentage} heavy waste`}
+                  className="w-full h-auto"
+                />
+                <div className="absolute top-2 right-2 bg-primary text-white text-xs px-2 py-1 rounded-full">
+                  {bookingState.heavyWastePercentage}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        
+        {/* Selected heavy waste types */}
+        {bookingState.heavyWasteTypes.length > 0 && (
+          <div className="mb-6">
+            <label className="block text-sm font-medium mb-3 text-white">Selected heavy waste types:</label>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {bookingState.heavyWasteTypes.map(wasteType => (
+                <div key={wasteType} className="bg-gray-900 rounded-lg p-3">
+                  <div className="font-medium text-white">{wasteType}</div>
+                  <div className="text-xs text-gray-400">{heavyWasteDescriptions[wasteType]}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
         
         {/* Current Selection Status */}
         <div className="text-sm text-white mb-6">{getSummaryText()}</div>
