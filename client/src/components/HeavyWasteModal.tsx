@@ -4,6 +4,7 @@ import { AlertTriangle, Info, X, ArrowRight } from "lucide-react";
 import { useBooking, HeavyWasteType, HeavyWastePercentage } from "@/contexts/BookingContext";
 import { useState } from "react";
 import { getSkipImageForPercentage } from "@/assets/skip-images";
+import { PlasterboardModal } from "./PlasterboardModal";
 
 interface HeavyWasteModalProps {
   isOpen: boolean;
@@ -32,6 +33,7 @@ const percentageDescriptions: Record<HeavyWastePercentage, string> = {
 
 export function HeavyWasteModal({ isOpen, onClose, onConfirm }: HeavyWasteModalProps) {
   const { bookingState, toggleHeavyWasteType, setHeavyWastePercentage } = useBooking();
+  const [showPlasterboardModal, setShowPlasterboardModal] = useState(false);
   
   const heavyWasteTypes: HeavyWasteType[] = [
     "Soil", "Concrete", "Bricks", "Tiles", "Sand", "Gravel", "Rubble"
@@ -47,6 +49,17 @@ export function HeavyWasteModal({ isOpen, onClose, onConfirm }: HeavyWasteModalP
 
   const handlePercentageSelect = (percentage: HeavyWastePercentage) => {
     setHeavyWastePercentage(percentage);
+  };
+  
+  // Handler for continue button that will open the plasterboard modal
+  const handleContinueToPlasterboard = () => {
+    setShowPlasterboardModal(true);
+  };
+  
+  // Handler for plasterboard modal confirmation
+  const handlePlasterboardConfirm = () => {
+    setShowPlasterboardModal(false);
+    onConfirm(); // Continue with the main flow
   };
 
   // Get summary text based on current selections
@@ -67,178 +80,187 @@ export function HeavyWasteModal({ isOpen, onClose, onConfirm }: HeavyWasteModalP
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="bg-black border-gray-800 sm:max-w-4xl p-0 max-h-[90vh] overflow-y-auto">
-        {/* Hidden DialogTitle for accessibility */}
-        <DialogTitle className="sr-only">Heavy Waste Types</DialogTitle>
-        <DialogDescription className="sr-only">
-          Specify the types and amount of heavy waste in your skip
-        </DialogDescription>
-        
-        {/* Main content without header */}
-        <div className="p-6">
-          {/* Warning Notice - Blue */}
-          <div className="bg-blue-900/30 border-l-4 border-blue-500 p-4 mb-6 rounded">
-            <div className="flex">
-              <div className="flex-shrink-0">
-                <AlertTriangle className="h-5 w-5 text-blue-500" />
-              </div>
-              <div className="ml-3">
-                <p className="text-sm text-white">
-                  Heavy waste types have specific requirements and restrictions. Some skip sizes may not be available for heavy waste disposal.
-                </p>
-              </div>
-            </div>
-          </div>
+    <>
+      <Dialog open={isOpen && !showPlasterboardModal} onOpenChange={(open) => !open && onClose()}>
+        <DialogContent className="bg-black border-gray-800 sm:max-w-4xl p-0 max-h-[90vh] overflow-y-auto">
+          {/* Hidden DialogTitle for accessibility */}
+          <DialogTitle className="sr-only">Heavy Waste Types</DialogTitle>
+          <DialogDescription className="sr-only">
+            Specify the types and amount of heavy waste in your skip
+          </DialogDescription>
           
-          {/* Heavy Waste Type Selection */}
-          <div className="mb-6">
-            <label className="block text-sm font-medium mb-3 text-white">Select heavy waste types:</label>
-            <div className="flex flex-wrap gap-2">
-              {heavyWasteTypes.map((wasteType) => (
-                <Button
-                  key={wasteType}
-                  variant={
-                    bookingState.heavyWasteTypes.includes(wasteType)
-                      ? "default"
-                      : "outline"
-                  }
-                  className={`px-4 py-2 rounded-full text-sm ${
-                    bookingState.heavyWasteTypes.includes(wasteType)
-                      ? "bg-blue-600 text-white"
-                      : "bg-gray-800 hover:bg-gray-700 text-white"
-                  }`}
-                  onClick={() => handleHeavyWasteTypeToggle(wasteType)}
-                >
-                  {wasteType}
-                </Button>
-              ))}
-            </div>
-          </div>
-          
-          {/* Percentage Selection */}
-          <div className="mb-6">
-            <label className="block text-sm font-medium mb-3 text-white">Approximate percentage of heavy waste:</label>
-            <div className="flex flex-wrap gap-2">
-              {percentageOptions.map((percentage) => (
-                <Button
-                  key={percentage}
-                  variant={
-                    bookingState.heavyWastePercentage === percentage
-                      ? "default"
-                      : "outline"
-                  }
-                  className={`px-4 py-2 rounded-full text-sm ${
-                    bookingState.heavyWastePercentage === percentage
-                      ? "bg-blue-600 text-white"
-                      : "bg-gray-800 hover:bg-gray-700 text-white"
-                  }`}
-                  onClick={() => handlePercentageSelect(percentage)}
-                >
-                  {percentage}
-                </Button>
-              ))}
-            </div>
-          </div>
-          
-          {/* Info Notice - Blue */}
-          <div className="bg-blue-900/30 border border-blue-800 rounded-lg p-4 mb-6">
-            <div className="flex">
-              <div className="flex-shrink-0">
-                <Info className="h-5 w-5 text-blue-400" />
-              </div>
-              <div className="ml-3">
-                <p className="text-sm text-white">Skip Size Restrictions</p>
-                <p className="text-xs text-white mt-1">
-                  For safety reasons, heavy waste can only be disposed of in skips up to 8 yards. Larger skips will not be available if heavy waste is selected.
-                </p>
-              </div>
-            </div>
-          </div>
-          
-          {/* Percentage description */}
-          {bookingState.heavyWastePercentage !== "No heavy waste" && (
-            <div className="text-sm text-white mb-2">
-              {percentageDescriptions[bookingState.heavyWastePercentage]}
-            </div>
-          )}
-          
-          {/* Visual representation */}
-          {bookingState.heavyWastePercentage !== "No heavy waste" && (
-            <div className="mb-6">
-              <label className="block text-sm font-medium mb-3 text-white">Visual representation:</label>
-              <div className="bg-white rounded-lg overflow-hidden">
-                <div className="relative py-4">
-                  <img 
-                    src={getSkipImageForPercentage(bookingState.heavyWastePercentage)}
-                    alt={`Skip with ${bookingState.heavyWastePercentage} heavy waste`}
-                    className="max-w-[250px] h-auto mx-auto"
-                  />
-                  <div className="absolute top-2 right-2 bg-blue-600 text-white text-xs px-2 py-1 rounded-full">
-                    {bookingState.heavyWastePercentage}
-                  </div>
+          {/* Main content without header */}
+          <div className="p-6">
+            {/* Warning Notice - Blue */}
+            <div className="bg-blue-900/30 border-l-4 border-blue-500 p-4 mb-6 rounded">
+              <div className="flex">
+                <div className="flex-shrink-0">
+                  <AlertTriangle className="h-5 w-5 text-blue-500" />
+                </div>
+                <div className="ml-3">
+                  <p className="text-sm text-white">
+                    Heavy waste types have specific requirements and restrictions. Some skip sizes may not be available for heavy waste disposal.
+                  </p>
                 </div>
               </div>
             </div>
-          )}
           
-          {/* Selected heavy waste types */}
-          {bookingState.heavyWasteTypes.length > 0 && (
+            {/* Heavy Waste Type Selection */}
             <div className="mb-6">
-              <label className="block text-sm font-medium mb-3 text-white">Selected heavy waste types:</label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {bookingState.heavyWasteTypes.map(wasteType => (
-                  <div key={wasteType} className="bg-gray-900 rounded-lg p-4">
-                    <div className="font-medium text-white">{wasteType}</div>
-                    <div className="text-sm text-gray-400">{heavyWasteDescriptions[wasteType]}</div>
-                  </div>
+              <label className="block text-sm font-medium mb-3 text-white">Select heavy waste types:</label>
+              <div className="flex flex-wrap gap-2">
+                {heavyWasteTypes.map((wasteType) => (
+                  <Button
+                    key={wasteType}
+                    variant={
+                      bookingState.heavyWasteTypes.includes(wasteType)
+                        ? "default"
+                        : "outline"
+                    }
+                    className={`px-4 py-2 rounded-full text-sm ${
+                      bookingState.heavyWasteTypes.includes(wasteType)
+                        ? "bg-blue-600 text-white"
+                        : "bg-gray-800 hover:bg-gray-700 text-white"
+                    }`}
+                    onClick={() => handleHeavyWasteTypeToggle(wasteType)}
+                  >
+                    {wasteType}
+                  </Button>
                 ))}
               </div>
             </div>
-          )}
           
-          {/* Skip Size Restrictions Notice */}
-          <div className="bg-blue-900/30 border-l-4 border-blue-600 rounded-lg p-4 mb-6">
-            <div className="flex">
-              <div className="flex-shrink-0">
-                <Info className="h-5 w-5 text-blue-500" />
-              </div>
-              <div className="ml-3">
-                <p className="text-sm font-medium text-white">Skip Size Restrictions</p>
-                <p className="text-sm text-white mt-1">
-                  For safety reasons, heavy waste can only be disposed of in skips up to 8 yards. Larger skips will not be available if heavy waste is selected.
-                </p>
+            {/* Percentage Selection */}
+            <div className="mb-6">
+              <label className="block text-sm font-medium mb-3 text-white">Approximate percentage of heavy waste:</label>
+              <div className="flex flex-wrap gap-2">
+                {percentageOptions.map((percentage) => (
+                  <Button
+                    key={percentage}
+                    variant={
+                      bookingState.heavyWastePercentage === percentage
+                        ? "default"
+                        : "outline"
+                    }
+                    className={`px-4 py-2 rounded-full text-sm ${
+                      bookingState.heavyWastePercentage === percentage
+                        ? "bg-blue-600 text-white"
+                        : "bg-gray-800 hover:bg-gray-700 text-white"
+                    }`}
+                    onClick={() => handlePercentageSelect(percentage)}
+                  >
+                    {percentage}
+                  </Button>
+                ))}
               </div>
             </div>
-          </div>
           
-          {/* Current Selection Status */}
-          <div className="text-sm text-white mb-6">{getSummaryText()}</div>
-        </div>
+            {/* Info Notice - Blue */}
+            <div className="bg-blue-900/30 border border-blue-800 rounded-lg p-4 mb-6">
+              <div className="flex">
+                <div className="flex-shrink-0">
+                  <Info className="h-5 w-5 text-blue-400" />
+                </div>
+                <div className="ml-3">
+                  <p className="text-sm text-white">Skip Size Restrictions</p>
+                  <p className="text-xs text-white mt-1">
+                    For safety reasons, heavy waste can only be disposed of in skips up to 8 yards. Larger skips will not be available if heavy waste is selected.
+                  </p>
+                </div>
+              </div>
+            </div>
+          
+            {/* Percentage description */}
+            {bookingState.heavyWastePercentage !== "No heavy waste" && (
+              <div className="text-sm text-white mb-2">
+                {percentageDescriptions[bookingState.heavyWastePercentage]}
+              </div>
+            )}
+          
+            {/* Visual representation */}
+            {bookingState.heavyWastePercentage !== "No heavy waste" && (
+              <div className="mb-6">
+                <label className="block text-sm font-medium mb-3 text-white">Visual representation:</label>
+                <div className="bg-white rounded-lg overflow-hidden">
+                  <div className="relative py-4">
+                    <img 
+                      src={getSkipImageForPercentage(bookingState.heavyWastePercentage)}
+                      alt={`Skip with ${bookingState.heavyWastePercentage} heavy waste`}
+                      className="max-w-[250px] h-auto mx-auto"
+                    />
+                    <div className="absolute top-2 right-2 bg-blue-600 text-white text-xs px-2 py-1 rounded-full">
+                      {bookingState.heavyWastePercentage}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          
+            {/* Selected heavy waste types */}
+            {bookingState.heavyWasteTypes.length > 0 && (
+              <div className="mb-6">
+                <label className="block text-sm font-medium mb-3 text-white">Selected heavy waste types:</label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {bookingState.heavyWasteTypes.map(wasteType => (
+                    <div key={wasteType} className="bg-gray-900 rounded-lg p-4">
+                      <div className="font-medium text-white">{wasteType}</div>
+                      <div className="text-sm text-gray-400">{heavyWasteDescriptions[wasteType]}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          
+            {/* Skip Size Restrictions Notice */}
+            <div className="bg-blue-900/30 border-l-4 border-blue-600 rounded-lg p-4 mb-6">
+              <div className="flex">
+                <div className="flex-shrink-0">
+                  <Info className="h-5 w-5 text-blue-500" />
+                </div>
+                <div className="ml-3">
+                  <p className="text-sm font-medium text-white">Skip Size Restrictions</p>
+                  <p className="text-sm text-white mt-1">
+                    For safety reasons, heavy waste can only be disposed of in skips up to 8 yards. Larger skips will not be available if heavy waste is selected.
+                  </p>
+                </div>
+              </div>
+            </div>
+          
+            {/* Current Selection Status */}
+            <div className="text-sm text-white mb-6">{getSummaryText()}</div>
+          </div>
         
-        {/* Fixed footer with buttons like in the screenshot */}
-        <div className="sticky bottom-0 flex justify-between items-center p-4 bg-black border-t border-gray-800">
-          <div>
-            <h2 className="text-white font-semibold text-lg">Selected Waste Types</h2>
-            <p className="text-gray-400 text-sm">Household Waste, Construction Waste and 2 more</p>
+          {/* Fixed footer with buttons like in the screenshot */}
+          <div className="sticky bottom-0 flex justify-between items-center p-4 bg-black border-t border-gray-800">
+            <div>
+              <h2 className="text-white font-semibold text-lg">Selected Waste Types</h2>
+              <p className="text-gray-400 text-sm">Household Waste, Construction Waste and 2 more</p>
+            </div>
+            <div className="flex gap-2">
+              <Button 
+                variant="outline" 
+                className="bg-transparent text-white border-gray-700 hover:bg-gray-800"
+                onClick={onClose}
+              >
+                Back
+              </Button>
+              <Button 
+                className="bg-blue-600 hover:bg-blue-700 flex items-center"
+                onClick={handleContinueToPlasterboard}
+              >
+                Continue <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </div>
           </div>
-          <div className="flex gap-2">
-            <Button 
-              variant="outline" 
-              className="bg-transparent text-white border-gray-700 hover:bg-gray-800"
-              onClick={onClose}
-            >
-              Back
-            </Button>
-            <Button 
-              className="bg-blue-600 hover:bg-blue-700 flex items-center"
-              onClick={onConfirm}
-            >
-              Continue <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </div>
-        </div>
-      </DialogContent>
-    </Dialog>
+        </DialogContent>
+      </Dialog>
+      
+      {/* Plasterboard Modal */}
+      <PlasterboardModal
+        isOpen={showPlasterboardModal}
+        onClose={() => setShowPlasterboardModal(false)}
+        onConfirm={handlePlasterboardConfirm}
+      />
+    </>
   );
 }
