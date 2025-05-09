@@ -186,7 +186,7 @@ export function HeavyWasteModal({ isOpen, onClose, onConfirm }: HeavyWasteModalP
           {bookingState.heavyWasteTypes.length > 0 && (
             <div className="mb-6">
               <label className="block text-sm font-medium mb-3 text-white">Selected heavy waste types:</label>
-              <div className="grid grid-cols-1 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {bookingState.heavyWasteTypes.map(wasteType => (
                   <div key={wasteType} className="bg-gray-900 rounded-lg p-4">
                     <div className="font-medium text-white">{wasteType}</div>
