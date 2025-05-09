@@ -12,11 +12,10 @@ export default defineConfig({
     alias: {
       "@": resolve(__dirname, "src"),
       "@assets": resolve(__dirname, "attached_assets"),
-      "@shared": resolve(__dirname, "shared"),
     },
   },
   server: {
-    host: "0.0.0.0", // ✅ consente l'accesso da qualunque host, incluso *.csb.app
+    host: "0.0.0.0", // 👈 permette l'accesso esterno
     strictPort: true,
     port: 5173,
     hmr: {
