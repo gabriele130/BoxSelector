@@ -91,7 +91,7 @@ export function PlasterboardModal({ isOpen, onClose, onConfirm }: PlasterboardMo
           {/* Visual representation */}
           {bookingState.plasterboardPercentage !== "No plasterboard" && 
            bookingState.plasterboardPercentage !== "I will dispose of it myself" && (
-            <div className="mb-6">
+            <div className="mb-20"> {/* Aumentato il margin-bottom per evitare sovrapposizione con il footer */}
               <label className="block text-sm font-medium mb-3 text-white">Visual representation:</label>
               <div className="bg-white rounded-lg overflow-hidden">
                 <div className="relative py-4">
