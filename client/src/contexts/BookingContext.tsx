@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, ReactNode } from "react";
 
 export type HeavyWasteType = "Soil" | "Concrete" | "Bricks" | "Tiles" | "Sand" | "Gravel" | "Rubble";
+export type PlasterboardPercentage = "No plasterboard" | "Up to 5%" | "5-20%" | "more than 20%" | "I will dispose of it myself";
 export type HeavyWastePercentage = "No heavy waste" | "Up to 5%" | "5-20%" | "Over 20%";
 export type WasteType = "household" | "construction" | "garden" | "commercial";
 
@@ -10,6 +11,7 @@ interface BookingState {
   selectedWasteTypes: WasteType[];
   heavyWasteTypes: HeavyWasteType[];
   heavyWastePercentage: HeavyWastePercentage;
+  plasterboardPercentage: PlasterboardPercentage;
   skipSize: string | null;
   permitRequired: boolean;
   deliveryDate: Date | null;
@@ -30,6 +32,7 @@ interface BookingContextType {
   toggleWasteType: (wasteType: WasteType) => void;
   toggleHeavyWasteType: (wasteType: HeavyWasteType) => void;
   setHeavyWastePercentage: (percentage: HeavyWastePercentage) => void;
+  setPlasterboardPercentage: (percentage: PlasterboardPercentage) => void;
   setSkipSize: (size: string) => void;
   setPermitRequired: (required: boolean) => void;
   setDeliveryDate: (date: Date) => void;
@@ -43,6 +46,7 @@ const initialState: BookingState = {
   selectedWasteTypes: ["garden"], // Initialize with garden selected as per design
   heavyWasteTypes: [],
   heavyWastePercentage: "No heavy waste",
+  plasterboardPercentage: "No plasterboard",
   skipSize: null,
   permitRequired: false,
   deliveryDate: null,
@@ -92,6 +96,10 @@ export function BookingProvider({ children }: { children: ReactNode }) {
   const setHeavyWastePercentage = (percentage: HeavyWastePercentage) => {
     setBookingState((prev) => ({ ...prev, heavyWastePercentage: percentage }));
   };
+  
+  const setPlasterboardPercentage = (percentage: PlasterboardPercentage) => {
+    setBookingState((prev) => ({ ...prev, plasterboardPercentage: percentage }));
+  };
 
   const setSkipSize = (size: string) => {
     setBookingState((prev) => ({ ...prev, skipSize: size }));
@@ -123,6 +131,7 @@ export function BookingProvider({ children }: { children: ReactNode }) {
     toggleWasteType,
     toggleHeavyWasteType,
     setHeavyWastePercentage,
+    setPlasterboardPercentage,
     setSkipSize,
     setPermitRequired,
     setDeliveryDate,
