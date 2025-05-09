@@ -3,7 +3,7 @@
 ## Come avviare il progetto su StackBlitz
 
 1. Importa il progetto su StackBlitz (da GitHub o caricando i file)
-2. Rinomina `stackblitz-package.json` in `package.json` (sostituendo quello esistente)
+2. IMPORTANTE: Correggi l'errore nel package.json seguendo le istruzioni in `FIX_PACKAGE_JSON.md`
 3. StackBlitz installerà automaticamente le dipendenze
 4. Il server verrà avviato automaticamente grazie al file `.stackblitzrc`
 5. L'applicazione sarà visibile nella finestra preview

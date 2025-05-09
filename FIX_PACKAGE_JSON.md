@@ -1,3 +1,13 @@
+# Correzione Errore Package.json
+
+È stato rilevato un errore nel file package.json che ne compromette la validità.
+
+Per correggere l'errore, segui questi passaggi:
+
+1. Apri il file `package.json` nel tuo editor
+2. Sostituisci tutto il contenuto del file con il seguente codice JSON valido:
+
+```json
 {
   "name": "boxselector",
   "version": "1.0.0",
@@ -89,15 +99,23 @@
     "@types/ws": "^8.5.13",
     "@vitejs/plugin-react": "^4.3.2",
     "autoprefixer": "^10.4.20",
+    "cross-env": "^7.0.3",
     "drizzle-kit": "^0.30.4",
     "esbuild": "^0.25.0",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.17",
     "tsx": "^4.19.1",
     "typescript": "5.6.3",
-    "vite": "^5.4.14"
+    "vite": "^5.0.0"
   },
   "optionalDependencies": {
     "bufferutil": "^4.0.8"
   }
 }
+```
+
+3. Salva il file e riavvia l'applicazione con `npm install` seguito da `npm run dev`
+
+### Errore originale
+
+Il file package.json contiene un errore di sintassi JSON. Ha una struttura errata negli script e contenuto aggiuntivo non valido alla fine del file.
