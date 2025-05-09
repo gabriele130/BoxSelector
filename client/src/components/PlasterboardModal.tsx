@@ -114,7 +114,10 @@ export function PlasterboardModal({ isOpen, onClose, onConfirm }: PlasterboardMo
           <Button 
             variant="outline" 
             className="bg-transparent text-white border-gray-700 hover:bg-gray-800"
-            onClick={onClose}
+            onClick={() => {
+              // Prima chiudiamo questo modale e poi torniamo all'heavy waste modale
+              onClose();
+            }}
           >
             Back
           </Button>

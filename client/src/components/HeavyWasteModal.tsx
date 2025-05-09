@@ -61,6 +61,11 @@ export function HeavyWasteModal({ isOpen, onClose, onConfirm }: HeavyWasteModalP
     setShowPlasterboardModal(false);
     onConfirm(); // Continue with the main flow
   };
+  
+  // Handler to close the plasterboard modal and go back to heavy waste
+  const handlePlasterboardBack = () => {
+    setShowPlasterboardModal(false);
+  };
 
   // Get summary text based on current selections
   const getSummaryText = () => {
@@ -258,7 +263,7 @@ export function HeavyWasteModal({ isOpen, onClose, onConfirm }: HeavyWasteModalP
       {/* Plasterboard Modal */}
       <PlasterboardModal
         isOpen={showPlasterboardModal}
-        onClose={() => setShowPlasterboardModal(false)}
+        onClose={handlePlasterboardBack}
         onConfirm={handlePlasterboardConfirm}
       />
     </>
