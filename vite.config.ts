@@ -11,13 +11,14 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": resolve(__dirname, "src"),
+      "@assets": resolve(__dirname, "attached_assets"),
+      "@shared": resolve(__dirname, "shared"),
     },
   },
   server: {
-    host: true,
+    host: "0.0.0.0", // ✅ consente l'accesso da qualunque host, incluso *.csb.app
     strictPort: true,
     port: 5173,
-    origin: "https://t29472-5173.csb.app", // ← il dominio del tuo workspace attuale su CodeSandbox
     hmr: {
       clientPort: 443,
     },
