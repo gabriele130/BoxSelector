@@ -184,7 +184,7 @@ export default function SelectSkip() {
             {/* Loading state */}
             {isLoading && (
               <div className="flex flex-col items-center justify-center py-12">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
                 <p className="mt-4 text-lg text-white">Loading skip options...</p>
               </div>
             )}
@@ -237,15 +237,15 @@ export default function SelectSkip() {
                     key={skip.id}
                     className={`cursor-pointer transition-all border-2 ${
                       selectedSkip === skip.id
-                        ? "border-primary bg-black"
+                        ? "border-blue-600 bg-black"
                         : "border-gray-700 bg-black"
-                    } hover:border-primary/70`}
+                    } hover:border-blue-600/70`}
                     onClick={() => handleSkipSelect(skip.id)}
                   >
                     <CardHeader className="pb-2">
                       <div className="flex justify-between items-start">
                         <CardTitle className="text-lg font-semibold text-white">{skip.name}</CardTitle>
-                        <div className="text-xl font-bold text-primary">{skip.price}</div>
+                        <div className="text-xl font-bold text-blue-500">{skip.price}</div>
                       </div>
                       <CardDescription className="text-gray-300">{skip.bestFor}</CardDescription>
                     </CardHeader>
@@ -264,7 +264,7 @@ export default function SelectSkip() {
                     <CardFooter className="pt-0">
                       <Button 
                         variant={selectedSkip === skip.id ? "default" : "outline"} 
-                        className={`w-full ${selectedSkip === skip.id ? "bg-primary text-white" : "text-white"}`}
+                        className={`w-full ${selectedSkip === skip.id ? "bg-blue-600 text-white" : "text-white"}`}
                         onClick={() => handleSkipSelect(skip.id)}
                       >
                         {selectedSkip === skip.id ? "Selected" : "Select"}
@@ -287,7 +287,7 @@ export default function SelectSkip() {
               
               <Button
                 variant="default"
-                className="px-6 py-6 rounded-md bg-primary hover:bg-primary/90 text-white font-medium transition-colors"
+                className="px-6 py-6 rounded-md bg-blue-600 hover:bg-blue-700 text-white font-medium transition-colors"
                 onClick={handleContinue}
                 disabled={!selectedSkip}
               >

@@ -57,7 +57,7 @@ export default function Home() {
             <div className="bg-gray-900 border border-gray-700 rounded-lg p-4 mb-8">
               <div className="flex items-start">
                 <div className="flex-shrink-0 mt-0.5">
-                  <Info className="h-5 w-5 text-primary" />
+                  <Info className="h-5 w-5 text-blue-500" />
                 </div>
                 <div className="ml-3">
                   <p className="text-sm text-white">
@@ -146,7 +146,7 @@ export default function Home() {
               
               <Button
                 variant="default"
-                className="px-6 py-6 rounded-md bg-primary hover:bg-primary/90 text-white font-medium transition-colors"
+                className="px-6 py-6 rounded-md bg-blue-600 hover:bg-blue-700 text-white font-medium transition-colors"
                 onClick={handleContinue}
               >
                 Continue <ArrowRight className="ml-2 h-4 w-4" />
