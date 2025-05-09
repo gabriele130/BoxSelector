@@ -1,0 +1,55 @@
+# Node.js dependencies
+node_modules
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+package-lock.json
+pnpm-lock.yaml
+
+# Build files
+dist
+dist-ssr
+build
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE files
+.idea
+.vscode
+*.sublime-project
+*.sublime-workspace
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Log files
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Temporary files
+*.swp
+*.swo
+.temp
+.cache
+tsconfig.tsbuildinfo
+
+# Database files
+*.sqlite
+*.sqlite3
+*.db
+
+# Replit specific files
+.replit
+.replit.nix
+.breakpoints
+replit.nix

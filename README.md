@@ -1,8 +1,8 @@
-# Skip Waste Management Platform
+# BoxSelector
 
 ## Descrizione del Progetto
 
-Skip Waste Management Platform è un'applicazione web progettata per semplificare il processo di prenotazione dei servizi di smaltimento rifiuti attraverso un'interfaccia utente intuitiva e guidata. Il progetto utilizza un approccio a "wizard" multi-step che guida l'utente attraverso l'intero processo di prenotazione di uno skip (cassone per rifiuti), dalla selezione del tipo di rifiuto fino alla conferma della prenotazione.
+BoxSelector è un'applicazione web progettata per semplificare il processo di prenotazione dei servizi di smaltimento rifiuti attraverso un'interfaccia utente intuitiva e guidata. Il progetto utilizza un approccio a "wizard" multi-step che guida l'utente attraverso l'intero processo di prenotazione di uno skip (cassone per rifiuti), dalla selezione del tipo di rifiuto fino alla conferma della prenotazione.
 
 ### Approccio di Design e Sviluppo
 

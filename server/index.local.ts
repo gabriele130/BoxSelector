@@ -2,7 +2,7 @@ import express, { type Request, type Response, type NextFunction } from "express
 import { createServer } from "http";
 import path from "path";
 import { registerRoutes } from "./routes";
-import { log, setupVite, serveStatic } from "./vite.local";
+import { log, setupVite, serveStatic } from "./vite";
 
 async function main() {
   const app = express();
