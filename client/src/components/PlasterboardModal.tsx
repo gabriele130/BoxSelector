@@ -46,7 +46,7 @@ export function PlasterboardModal({ isOpen, onClose, onConfirm }: PlasterboardMo
           </DialogDescription>
         </DialogHeader>
         
-        <div className="py-4">
+        <div className="py-4 pb-24"> {/* Aggiunto padding-bottom per evitare sovrapposizioni */}
           {/* Important Notice */}
           <div className="bg-amber-900/30 border border-amber-600 rounded-lg p-4 mb-6">
             <div className="flex">
@@ -91,7 +91,7 @@ export function PlasterboardModal({ isOpen, onClose, onConfirm }: PlasterboardMo
           {/* Visual representation */}
           {bookingState.plasterboardPercentage !== "No plasterboard" && 
            bookingState.plasterboardPercentage !== "I will dispose of it myself" && (
-            <div className="mb-20"> {/* Aumentato il margin-bottom per evitare sovrapposizione con il footer */}
+            <div className="mb-28"> {/* Aumentato ulteriormente il margin-bottom per evitare sovrapposizione con il footer */}
               <label className="block text-sm font-medium mb-3 text-white">Visual representation:</label>
               <div className="bg-white rounded-lg overflow-hidden">
                 <div className="relative py-4">
