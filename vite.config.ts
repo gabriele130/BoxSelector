@@ -3,7 +3,6 @@ import react from "@vitejs/plugin-react";
 import { fileURLToPath } from "url";
 import { dirname, resolve } from "path";
 
-// ESM-compatible __dirname
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -22,6 +21,7 @@ export default defineConfig({
     emptyOutDir: true,
   },
   server: {
-    host: true, // ✅ Questa è la proprietà corretta per abilitare gli accessi esterni
+    host: true,
+    origin: "https://gsy432-5173.csb.app", // workaround per CodeSandbox
   },
 });
