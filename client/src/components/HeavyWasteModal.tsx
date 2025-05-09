@@ -77,19 +77,12 @@ export function HeavyWasteModal({ isOpen, onClose, onConfirm }: HeavyWasteModalP
         
         {/* Main content */}
         <div className="p-6">
-          {/* Custom Header based on screenshot */}
-          <div className="flex justify-between items-center py-4 px-1 border-b border-gray-800 mb-6">
-            <div>
-              <h2 className="text-white font-semibold text-lg">Selected Waste Types</h2>
-              <p className="text-gray-400 text-sm">Household Waste, Construction Waste and 2 more</p>
-            </div>
-          </div>
         
           {/* Warning Notice */}
-          <div className="bg-amber-900/30 border-l-4 border-amber-500 p-4 mb-6 rounded">
+          <div className="bg-blue-900/30 border-l-4 border-blue-500 p-4 mb-6 rounded">
             <div className="flex">
               <div className="flex-shrink-0">
-                <AlertTriangle className="h-5 w-5 text-amber-500" />
+                <AlertTriangle className="h-5 w-5 text-blue-500" />
               </div>
               <div className="ml-3">
                 <p className="text-sm text-white">
