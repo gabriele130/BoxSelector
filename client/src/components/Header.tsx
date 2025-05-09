@@ -7,7 +7,7 @@ export function Header() {
       <div className="container mx-auto">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <Recycle className="h-6 w-6 text-primary" />
+            <Recycle className="h-6 w-6 text-blue-500" />
             <h1 className="text-xl font-bold">Waste Management</h1>
           </div>
           <div className="flex items-center space-x-3">
@@ -18,7 +18,7 @@ export function Header() {
               Help
             </Button>
             <Button
-              className="p-2 text-sm bg-primary-800 hover:bg-primary-700 rounded-md"
+              className="p-2 text-sm bg-blue-700 hover:bg-blue-600 rounded-md"
             >
               Log In
             </Button>

@@ -29,9 +29,9 @@ export function ProgressStepper({ currentStep }: ProgressStepperProps) {
               <div
                 className={`w-10 h-10 rounded-full border-2 flex items-center justify-center mb-2 ${
                   step.id < currentStep
-                    ? "border-emerald-500 bg-emerald-500/10 text-emerald-500"
+                    ? "border-blue-500 bg-blue-500/10 text-blue-500"
                     : step.id === currentStep
-                    ? "border-primary text-primary"
+                    ? "border-blue-600 text-blue-600"
                     : "border-gray-800 text-gray-600"
                 }`}
               >
@@ -39,7 +39,7 @@ export function ProgressStepper({ currentStep }: ProgressStepperProps) {
               </div>
               <div
                 className={`text-xs absolute -bottom-6 text-center w-24 ${
-                  step.id <= currentStep ? "text-primary-300" : "text-gray-500"
+                  step.id <= currentStep ? "text-blue-300" : "text-gray-500"
                 }`}
               >
                 {step.title}
@@ -49,8 +49,8 @@ export function ProgressStepper({ currentStep }: ProgressStepperProps) {
                 <div
                   className={`absolute left-0 top-5 h-0.5 w-full ${
                     step.id < currentStep
-                      ? "bg-emerald-500/50"
-                      : "bg-primary-800"
+                      ? "bg-blue-500/50"
+                      : "bg-gray-800"
                   }`}
                   style={{ left: "50%", width: "100%" }}
                 />
