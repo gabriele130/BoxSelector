@@ -40,9 +40,9 @@ export function WasteTypeCard({
     <div
       className={`relative bg-black border ${
         isSelected
-          ? "border-2 border-primary bg-black"
+          ? "border-2 border-blue-600 bg-black"
           : "border-gray-700"
-      } rounded-lg p-5 transition-all hover:border-primary cursor-pointer`}
+      } rounded-lg p-5 transition-all hover:border-blue-600 cursor-pointer`}
       onClick={onToggle}
       data-waste-type={type}
     >
@@ -53,7 +53,7 @@ export function WasteTypeCard({
       <div className="flex items-start">
         <div
           className={`mr-4 flex-shrink-0 w-12 h-12 rounded-full ${
-            isSelected ? "bg-primary-800/50" : "bg-gray-700"
+            isSelected ? "bg-blue-600/50" : "bg-gray-700"
           } flex items-center justify-center`}
         >
           <div className={isSelected ? "text-white" : "text-white"}>

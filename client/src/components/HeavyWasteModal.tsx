@@ -75,10 +75,9 @@ export function HeavyWasteModal({ isOpen, onClose, onConfirm }: HeavyWasteModalP
           Specify the types and amount of heavy waste in your skip
         </DialogDescription>
         
-        {/* Main content */}
+        {/* Main content without header */}
         <div className="p-6">
-        
-          {/* Warning Notice */}
+          {/* Warning Notice - Blue */}
           <div className="bg-blue-900/30 border-l-4 border-blue-500 p-4 mb-6 rounded">
             <div className="flex">
               <div className="flex-shrink-0">
@@ -142,7 +141,7 @@ export function HeavyWasteModal({ isOpen, onClose, onConfirm }: HeavyWasteModalP
             </div>
           </div>
           
-          {/* Info Notice */}
+          {/* Info Notice - Blue */}
           <div className="bg-blue-900/30 border border-blue-800 rounded-lg p-4 mb-6">
             <div className="flex">
               <div className="flex-shrink-0">
