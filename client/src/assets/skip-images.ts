@@ -14,5 +14,11 @@ export const getSkipImageForPercentage = (percentage: HeavyWastePercentage): str
   }
   
   // Return the path to the image in assets folder
-  return `/src/assets/images/${skipImagesBase64[percentage]}`;
+  // Using a dynamic import to get the correct path to the image
+  try {
+    return new URL(`/src/assets/images/${skipImagesBase64[percentage]}`, import.meta.url).href;
+  } catch (e) {
+    console.error("Error loading image:", e);
+    return '';
+  }
 };

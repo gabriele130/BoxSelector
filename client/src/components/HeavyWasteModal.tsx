@@ -68,7 +68,7 @@ export function HeavyWasteModal({ isOpen, onClose, onConfirm }: HeavyWasteModalP
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="bg-black border-gray-800 sm:max-w-4xl p-0 overflow-hidden">
+      <DialogContent className="bg-black border-gray-800 sm:max-w-4xl p-0 max-h-[90vh] overflow-y-auto">
         {/* Hidden DialogTitle for accessibility */}
         <DialogTitle className="sr-only">Heavy Waste Types</DialogTitle>
         <DialogDescription className="sr-only">
@@ -168,11 +168,11 @@ export function HeavyWasteModal({ isOpen, onClose, onConfirm }: HeavyWasteModalP
             <div className="mb-6">
               <label className="block text-sm font-medium mb-3 text-white">Visual representation:</label>
               <div className="bg-gray-900 rounded-lg overflow-hidden">
-                <div className="relative">
+                <div className="relative py-4">
                   <img 
                     src={getSkipImageForPercentage(bookingState.heavyWastePercentage)}
                     alt={`Skip with ${bookingState.heavyWastePercentage} heavy waste`}
-                    className="w-full h-auto"
+                    className="max-w-[250px] h-auto mx-auto"
                   />
                   <div className="absolute top-2 right-2 bg-blue-600 text-white text-xs px-2 py-1 rounded-full">
                     {bookingState.heavyWastePercentage}
@@ -214,7 +214,7 @@ export function HeavyWasteModal({ isOpen, onClose, onConfirm }: HeavyWasteModalP
         </div>
         
         {/* Fixed footer with buttons like in the screenshot */}
-        <div className="flex justify-between items-center p-4 bg-black border-t border-gray-800">
+        <div className="sticky bottom-0 flex justify-between items-center p-4 bg-black border-t border-gray-800">
           <div>
             <h2 className="text-white font-semibold text-lg">Selected Waste Types</h2>
             <p className="text-gray-400 text-sm">Household Waste, Construction Waste and 2 more</p>
