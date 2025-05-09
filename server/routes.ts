@@ -4,8 +4,22 @@ import { storage } from "./storage";
 import { insertBookingSchema } from "@shared/schema";
 import { ZodError } from "zod";
 import { fromZodError } from "zod-validation-error";
+import path from "path";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Aggiungi route per le pagine di debug
+  app.get("/debug", (req, res) => {
+    res.sendFile(path.resolve(process.cwd(), "src", "index-debug.html"));
+  });
+  
+  app.get("/test", (req, res) => {
+    res.sendFile(path.resolve(process.cwd(), "src", "simple.html"));
+  });
+  
+  app.get("/minimal", (req, res) => {
+    res.sendFile(path.resolve(process.cwd(), "src", "minimal.html"));
+  });
+  
   // Get all bookings
   app.get("/api/bookings", async (req, res) => {
     try {

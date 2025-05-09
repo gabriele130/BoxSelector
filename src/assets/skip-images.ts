@@ -1,18 +1,17 @@
 import { HeavyWastePercentage } from "@/contexts/BookingContext";
 
-// Mappings for skip images by percentage
+// Qui potremmo usare le immagini importate da @assets tramite Vite
+// Ora usiamo dei placeholder per dimostrare che il codice funziona
+
 export const skipImagesBase64: Record<Exclude<HeavyWastePercentage, 'No heavy waste'>, string> = {
-  "Up to 5%": "heavywaste-up-to-5.png",
-  "5-20%": "heavywaste-5-to-20.png",
-  "Over 20%": "heavywaste-over20.png"
+  "Up to 5%": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTk4IiBoZWlnaHQ9Ijk4IiB4PSIxIiB5PSIxIiBzdHJva2U9IiMzMzMiIGZpbGw9IiM2NjY2NjYiIHN0cm9rZS13aWR0aD0iMiIgcng9IjUiIHJ5PSI1Ii8+PHRleHQgeD0iNTAiIHk9IjUwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTYiIGZpbGw9IiNmZmYiPlVwIHRvIDUlPC90ZXh0Pjwvc3ZnPg==",
+  "5-20%": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTk4IiBoZWlnaHQ9Ijk4IiB4PSIxIiB5PSIxIiBzdHJva2U9IiMzMzMiIGZpbGw9IiM1NTU1NTUiIHN0cm9rZS13aWR0aD0iMiIgcng9IjUiIHJ5PSI1Ii8+PHRleHQgeD0iNTAiIHk9IjUwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTYiIGZpbGw9IiNmZmYiPjUtMjAlPC90ZXh0Pjwvc3ZnPg==",
+  "Over 20%": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTk4IiBoZWlnaHQ9Ijk4IiB4PSIxIiB5PSIxIiBzdHJva2U9IiMzMzMiIGZpbGw9IiM0NDQ0NDQiIHN0cm9rZS13aWR0aD0iMiIgcng9IjUiIHJ5PSI1Ii8+PHRleHQgeD0iNTAiIHk9IjUwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTYiIGZpbGw9IiNmZmYiPk92ZXIgMjAlPC90ZXh0Pjwvc3ZnPg=="
 };
 
-// Function to get skip image based on heavy waste percentage
 export const getSkipImageForPercentage = (percentage: HeavyWastePercentage): string => {
-  if (percentage === 'No heavy waste') {
-    return ''; // Return empty string or default image
+  if (percentage === "No heavy waste") {
+    return "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTk4IiBoZWlnaHQ9Ijk4IiB4PSIxIiB5PSIxIiBzdHJva2U9IiMzMzMiIGZpbGw9IiM3Nzc3NzciIHN0cm9rZS13aWR0aD0iMiIgcng9IjUiIHJ5PSI1Ii8+PHRleHQgeD0iMjUiIHk9IjUwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTYiIGZpbGw9IiNmZmYiPk5vIGhlYXZ5IHdhc3RlPC90ZXh0Pjwvc3ZnPg==";
   }
-  
-  // Return the path to the image in the public directory
-  return `/images/${skipImagesBase64[percentage]}`;
+  return skipImagesBase64[percentage];
 };

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Debug Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    pre {
+      background-color: #f5f5f5;
+      padding: 10px;
+      border-radius: 4px;
+      overflow-x: auto;
+    }
+    h1 {
+      color: #333;
+    }
+    .error {
+      color: #e53e3e;
+      font-weight: bold;
+    }
+    .info {
+      color: #2b6cb0;
+    }
+  </style>
+</head>
+<body>
+  <h1>BoxSelector Debug Page</h1>
+  
+  <div id="debug-info">
+    <h2>Browser Information</h2>
+    <pre id="browser-info"></pre>
+    
+    <h2>Console Logs</h2>
+    <pre id="console-logs"><em>Logs will appear here...</em></pre>
+    
+    <h2>Environment Check</h2>
+    <pre id="env-check"></pre>
+  </div>
+
+  <script>
+    // Capture browser information
+    document.getElementById('browser-info').textContent = `
+User Agent: ${navigator.userAgent}
+Platform: ${navigator.platform}
+Cookies Enabled: ${navigator.cookieEnabled}
+Language: ${navigator.language}
+Online: ${navigator.onLine}
+    `;
+
+    // Capture console logs
+    const consoleLogsElement = document.getElementById('console-logs');
+    const originalConsole = {
+      log: console.log,
+      error: console.error,
+      warn: console.warn,
+      info: console.info
+    };
+
+    console.log = function() {
+      originalConsole.log.apply(console, arguments);
+      appendToLogs('log', arguments);
+    };
+    
+    console.error = function() {
+      originalConsole.error.apply(console, arguments);
+      appendToLogs('error', arguments);
+    };
+    
+    console.warn = function() {
+      originalConsole.warn.apply(console, arguments);
+      appendToLogs('warn', arguments);
+    };
+    
+    console.info = function() {
+      originalConsole.info.apply(console, arguments);
+      appendToLogs('info', arguments);
+    };
+
+    function appendToLogs(type, args) {
+      const div = document.createElement('div');
+      div.className = type;
+      div.textContent = `[${type.toUpperCase()}] ${Array.from(args).map(arg => 
+        typeof arg === 'object' ? JSON.stringify(arg) : arg).join(' ')}`;
+      
+      if (consoleLogsElement.firstChild && consoleLogsElement.firstChild.textContent.includes('Logs will appear here')) {
+        consoleLogsElement.innerHTML = '';
+      }
+      
+      consoleLogsElement.appendChild(div);
+    }
+
+    // Check environment
+    const envCheckElement = document.getElementById('env-check');
+    try {
+      envCheckElement.innerHTML = `
+<span class="info">Checking React availability...</span>
+React: ${typeof React !== 'undefined' ? 'Available' : 'Not Available'}
+ReactDOM: ${typeof ReactDOM !== 'undefined' ? 'Available' : 'Not Available'}
+
+<span class="info">Checking DOM elements...</span>
+Root Element: ${document.getElementById('root') ? 'Found' : 'Not Found'}
+
+<span class="info">Checking script loading...</span>
+Main Script: Attempting to load...
+      `;
+
+      // Test loading the main script
+      const script = document.createElement('script');
+      script.type = 'module';
+      script.src = '/src/main.tsx';
+      script.onerror = function(e) {
+        envCheckElement.innerHTML += `\n<span class="error">Failed to load main script: ${e.type}</span>`;
+      };
+      script.onload = function() {
+        envCheckElement.innerHTML += `\n<span class="info">Main script loaded successfully</span>`;
+      };
+      document.body.appendChild(script);
+    } catch (e) {
+      envCheckElement.innerHTML += `\n<span class="error">Error during environment check: ${e.message}</span>`;
+    }
+
+    // Log initial page load
+    console.log('Debug page loaded at', new Date().toLocaleString());
+  </script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, ReactNode, useState } from "react";
 
 export type HeavyWasteType = "Soil" | "Concrete" | "Bricks" | "Tiles" | "Sand" | "Gravel" | "Rubble";
 export type PlasterboardPercentage = "No plasterboard" | "Up to 5%" | "5-20%" | "more than 20%" | "I will dispose of it myself";
@@ -41,9 +41,9 @@ interface BookingContextType {
 }
 
 const initialState: BookingState = {
-  currentStep: 2, // Starting at waste type selection step
-  postcode: "",
-  selectedWasteTypes: ["garden"], // Initialize with garden selected as per design
+  currentStep: 2, // Start at waste type selection
+  postcode: "SW1A 1AA", // Default for testing
+  selectedWasteTypes: [],
   heavyWasteTypes: [],
   heavyWastePercentage: "No heavy waste",
   plasterboardPercentage: "No plasterboard",
@@ -53,93 +53,103 @@ const initialState: BookingState = {
   contact: {
     name: "",
     email: "",
-    phone: "",
+    phone: ""
   },
   paymentDetails: {
-    completed: false,
-  },
+    completed: false
+  }
 };
 
 const BookingContext = createContext<BookingContextType | undefined>(undefined);
 
 export function BookingProvider({ children }: { children: ReactNode }) {
   const [bookingState, setBookingState] = useState<BookingState>(initialState);
-
+  
   const setCurrentStep = (step: number) => {
-    setBookingState((prev) => ({ ...prev, currentStep: step }));
+    setBookingState(prev => ({ ...prev, currentStep: step }));
   };
-
+  
   const setPostcode = (postcode: string) => {
-    setBookingState((prev) => ({ ...prev, postcode }));
+    setBookingState(prev => ({ ...prev, postcode }));
   };
-
+  
   const toggleWasteType = (wasteType: WasteType) => {
-    setBookingState((prev) => {
-      const isSelected = prev.selectedWasteTypes.includes(wasteType);
-      const updatedTypes = isSelected
-        ? prev.selectedWasteTypes.filter((type) => type !== wasteType)
+    setBookingState(prev => {
+      const exists = prev.selectedWasteTypes.includes(wasteType);
+      const selectedWasteTypes = exists
+        ? prev.selectedWasteTypes.filter(type => type !== wasteType)
         : [...prev.selectedWasteTypes, wasteType];
-      return { ...prev, selectedWasteTypes: updatedTypes };
+      
+      return {
+        ...prev,
+        selectedWasteTypes
+      };
     });
   };
-
+  
   const toggleHeavyWasteType = (wasteType: HeavyWasteType) => {
-    setBookingState((prev) => {
-      const isSelected = prev.heavyWasteTypes.includes(wasteType);
-      const updatedTypes = isSelected
-        ? prev.heavyWasteTypes.filter((type) => type !== wasteType)
+    setBookingState(prev => {
+      const exists = prev.heavyWasteTypes.includes(wasteType);
+      const heavyWasteTypes = exists
+        ? prev.heavyWasteTypes.filter(type => type !== wasteType)
         : [...prev.heavyWasteTypes, wasteType];
-      return { ...prev, heavyWasteTypes: updatedTypes };
+      
+      return {
+        ...prev,
+        heavyWasteTypes
+      };
     });
   };
-
+  
   const setHeavyWastePercentage = (percentage: HeavyWastePercentage) => {
-    setBookingState((prev) => ({ ...prev, heavyWastePercentage: percentage }));
+    setBookingState(prev => ({ ...prev, heavyWastePercentage: percentage }));
   };
   
   const setPlasterboardPercentage = (percentage: PlasterboardPercentage) => {
-    setBookingState((prev) => ({ ...prev, plasterboardPercentage: percentage }));
+    setBookingState(prev => ({ ...prev, plasterboardPercentage: percentage }));
   };
-
+  
   const setSkipSize = (size: string) => {
-    setBookingState((prev) => ({ ...prev, skipSize: size }));
+    setBookingState(prev => ({ ...prev, skipSize: size }));
   };
-
+  
   const setPermitRequired = (required: boolean) => {
-    setBookingState((prev) => ({ ...prev, permitRequired: required }));
+    setBookingState(prev => ({ ...prev, permitRequired: required }));
   };
-
+  
   const setDeliveryDate = (date: Date) => {
-    setBookingState((prev) => ({ ...prev, deliveryDate: date }));
+    setBookingState(prev => ({ ...prev, deliveryDate: date }));
   };
-
+  
   const setContact = (contact: BookingState["contact"]) => {
-    setBookingState((prev) => ({ ...prev, contact }));
+    setBookingState(prev => ({ ...prev, contact }));
   };
-
+  
   const setPaymentCompleted = (completed: boolean) => {
-    setBookingState((prev) => ({
+    setBookingState(prev => ({
       ...prev,
-      paymentDetails: { ...prev.paymentDetails, completed },
+      paymentDetails: { ...prev.paymentDetails, completed }
     }));
   };
-
-  const value = {
-    bookingState,
-    setCurrentStep,
-    setPostcode,
-    toggleWasteType,
-    toggleHeavyWasteType,
-    setHeavyWastePercentage,
-    setPlasterboardPercentage,
-    setSkipSize,
-    setPermitRequired,
-    setDeliveryDate,
-    setContact,
-    setPaymentCompleted,
-  };
-
-  return <BookingContext.Provider value={value}>{children}</BookingContext.Provider>;
+  
+  return (
+    <BookingContext.Provider value={{
+      bookingState,
+      setCurrentStep,
+      setPostcode,
+      toggleWasteType,
+      toggleHeavyWasteType,
+      setHeavyWastePercentage,
+      setPlasterboardPercentage,
+      setSkipSize,
+      setPermitRequired,
+      setDeliveryDate,
+      setContact,
+      setPaymentCompleted
+    }}>
+      {children}
+    </BookingContext.Provider>
+  );
 }
 
 export function useBooking() {
