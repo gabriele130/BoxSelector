@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "wouter";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ProgressStepper } from "@/components/ProgressStepper";
@@ -147,8 +148,11 @@ export default function SelectSkip() {
     }
   };
 
+  const [, setLocation] = useLocation();
+
   const handleGoBack = () => {
     setCurrentStep(2); // Go back to waste type step
+    setLocation("/"); // Navigate back to the home page
   };
 
   return (
