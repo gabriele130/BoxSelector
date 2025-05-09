@@ -1,46 +1,46 @@
 # BoxSelector
 
-## Descrizione del Progetto
+## Project Description
 
-BoxSelector è un'applicazione web progettata per semplificare il processo di prenotazione dei servizi di smaltimento rifiuti attraverso un'interfaccia utente intuitiva e guidata. Il progetto utilizza un approccio a "wizard" multi-step che guida l'utente attraverso l'intero processo di prenotazione di uno skip (cassone per rifiuti), dalla selezione del tipo di rifiuto fino alla conferma della prenotazione.
+BoxSelector is a web application designed to simplify the waste disposal service booking process through an intuitive, guided user interface. The project uses a multi-step wizard approach that guides users through the entire skip (waste container) booking process, from waste type selection to booking confirmation.
 
-### Approccio di Design e Sviluppo
+### Design and Development Approach
 
-L'applicazione è stata sviluppata seguendo questi principi:
+The application was developed following these principles:
 
-1. **Esperienza Utente Semplificata**: Un'interfaccia step-by-step che guida l'utente attraverso ogni fase del processo di prenotazione con indicazioni chiare.
+1. **Simplified User Experience**: A step-by-step interface that guides users through each phase of the booking process with clear instructions.
 
-2. **Design Visivo Moderno**: Un tema scuro con accenti blu per un'esperienza visiva moderna e coerente, con particolare attenzione all'accessibilità e leggibilità.
+2. **Modern Visual Design**: A dark theme with blue accents for a modern and consistent visual experience, with particular attention to accessibility and readability.
 
-3. **Architettura Component-Based**: L'applicazione è strutturata in componenti riutilizzabili, mantenendo una chiara separazione tra UI, logica di business e gestione dello stato.
+3. **Component-Based Architecture**: The application is structured with reusable components, maintaining a clear separation between UI, business logic, and state management.
 
-4. **Feedback Visivo**: Rappresentazioni grafiche interattive dei tipi di rifiuti e delle percentuali per aiutare gli utenti a comprendere meglio le loro scelte.
+4. **Visual Feedback**: Interactive graphical representations of waste types and percentages to help users better understand their choices.
 
-5. **Flusso Sequenziale Intuitivo**: I popup sequenziali per tipi di rifiuti specifici (rifiuti pesanti, cartongesso) aiutano l'utente a fornire informazioni dettagliate in modo incrementale.
+5. **Intuitive Sequential Flow**: Sequential popups for specific waste types (heavy waste, plasterboard) help the user provide detailed information incrementally.
 
-## Tecnologie Utilizzate
+## Technologies Used
 
 ### Frontend
-- **React.js**: Framework UI per la costruzione dell'interfaccia a componenti
-- **TypeScript**: Per il type-checking statico e la robustezza del codice
-- **Tailwind CSS**: Per lo styling responsive e coerente
-- **Shadcn/UI**: Componenti UI accessibili e personalizzabili
-- **React Hook Form**: Per la gestione dei form e la validazione
-- **Zod**: Per la validazione dei dati e il type-checking runtime
-- **Wouter**: Per la gestione del routing lato client
-- **TanStack Query**: Per la gestione delle richieste API e la cache
+- **React.js**: UI framework for building the component interface
+- **TypeScript**: For static type-checking and code robustness
+- **Tailwind CSS**: For responsive and consistent styling
+- **Shadcn/UI**: Accessible and customizable UI components
+- **React Hook Form**: For form management and validation
+- **Zod**: For data validation and runtime type-checking
+- **Wouter**: For client-side routing management
+- **TanStack Query**: For API request management and caching
 
 ### Backend
-- **Express.js**: Framework Node.js per il server API
-- **Drizzle ORM**: Per l'interazione con il database e la generazione di query
-- **JSON Schema**: Per la validazione dei dati in ingresso
-- **Memory Storage**: Per l'archiviazione temporanea dei dati durante lo sviluppo
+- **Express.js**: Node.js framework for the API server
+- **Drizzle ORM**: For database interaction and query generation
+- **JSON Schema**: For input data validation
+- **Memory Storage**: For temporary data storage during development
 
-### Tooling e Build
-- **Vite**: Per lo sviluppo rapido e la build ottimizzata
-- **ESBuild**: Per la compilazione rapida del backend
-- **TypeScript**: Per il type-checking e la documentazione del codice
+### Tooling and Build
+- **Vite**: For rapid development and optimized builds
+- **ESBuild**: For rapid backend compilation
+- **TypeScript**: For type-checking and code documentation
 
 ### Deployment
-- **Node.js Runtime**: Per l'esecuzione del server
-- **Express Static Serving**: Per servire l'applicazione frontend come file statici
+- **Node.js Runtime**: For server execution
+- **Express Static Serving**: For serving the frontend application as static files
