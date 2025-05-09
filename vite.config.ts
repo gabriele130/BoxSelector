@@ -8,9 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 export default defineConfig({
-  plugins: [
-    react(),
-  ],
+  plugins: [react()],
   resolve: {
     alias: {
       "@": resolve(__dirname, "client", "src"),
@@ -22,5 +20,8 @@ export default defineConfig({
   build: {
     outDir: resolve(__dirname, "dist/public"),
     emptyOutDir: true,
+  },
+  server: {
+    host: true, // ✅ Questa è la proprietà corretta per abilitare gli accessi esterni
   },
 });
