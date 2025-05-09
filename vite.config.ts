@@ -10,18 +10,12 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@": resolve(__dirname, "client", "src"),
+      "@": resolve(__dirname, "src"),
       "@shared": resolve(__dirname, "shared"),
       "@assets": resolve(__dirname, "attached_assets"),
     },
   },
-  root: resolve(__dirname, "client"),
-  build: {
-    outDir: resolve(__dirname, "dist/public"),
-    emptyOutDir: true,
-  },
   server: {
     host: true,
-    origin: "https://gsy432-5173.csb.app", // workaround per CodeSandbox
   },
 });
