@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { AlertTriangle, Info, X, ArrowRight } from "lucide-react";
 import { useBooking, HeavyWasteType, HeavyWastePercentage } from "@/contexts/BookingContext";
 import { useState } from "react";
-import { getSkipImageForPercentage } from "@/assets/skip-images";
+import { getHeavyWasteImagePath, getHeavyWasteSvgFallback } from "@/assets/image-paths";
 import { PlasterboardModal } from "./PlasterboardModal";
 
 interface HeavyWasteModalProps {
@@ -189,9 +189,15 @@ export function HeavyWasteModal({ isOpen, onClose, onConfirm }: HeavyWasteModalP
                 <div className="bg-white rounded-lg overflow-hidden">
                   <div className="relative py-4">
                     <img 
-                      src={getSkipImageForPercentage(bookingState.heavyWastePercentage)}
+                      src={getHeavyWasteImagePath(bookingState.heavyWastePercentage)}
                       alt={`Skip with ${bookingState.heavyWastePercentage} heavy waste`}
                       className="max-w-[250px] h-auto mx-auto"
+                      onError={(e) => {
+                        // Fallback a SVG se l'immagine non può essere caricata
+                        const target = e.target as HTMLImageElement;
+                        target.onerror = null; // Previene ricorsione infinita
+                        target.src = getHeavyWasteSvgFallback(bookingState.heavyWastePercentage);
+                      }}
                     />
                     <div className="absolute top-2 right-2 bg-blue-600 text-white text-xs px-2 py-1 rounded-full">
                       {bookingState.heavyWastePercentage}
