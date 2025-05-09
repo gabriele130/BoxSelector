@@ -275,30 +275,17 @@ export default function SelectSkip() {
               </div>
             )}
             
-            {/* Action Buttons */}
-            <div className="flex justify-between mt-12">
-              <Button
-                variant="outline"
-                className="px-6 py-6 rounded-md text-gray-300 hover:bg-gray-800 transition-colors"
-                onClick={handleGoBack}
-              >
-                <ArrowLeft className="mr-2 h-4 w-4" /> Back
-              </Button>
-              
-              <Button
-                variant="default"
-                className="px-6 py-6 rounded-md bg-blue-600 hover:bg-blue-700 text-white font-medium transition-colors"
-                onClick={handleContinue}
-                disabled={!selectedSkip}
-              >
-                Continue <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </div>
+            {/* Spazio vuoto al posto dei bottoni che sono stati spostati nel footer */}
+            <div className="mt-12 pb-24"></div>
           </div>
         </div>
       </main>
       
-      <Footer />
+      <Footer 
+        onBack={handleGoBack}
+        onContinue={handleContinue}
+        disableContinue={!selectedSkip}
+      />
     </div>
   );
 }
