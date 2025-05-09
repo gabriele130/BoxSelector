@@ -37,9 +37,8 @@ async function main() {
   });
 
   const port = process.env.PORT || 3000;
-  // Utilizziamo 0.0.0.0 come host per essere sicuri che funzioni anche su StackBlitz
-  server.listen(port, '0.0.0.0', () => {
-    log(`Server listening on port ${port}`);
+  server.listen(port, () => {
+    log(`Server listening on http://localhost:${port}`);
   });
 }
 
