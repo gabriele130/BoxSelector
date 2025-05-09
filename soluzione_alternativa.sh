@@ -9,6 +9,45 @@ NC='\033[0m' # No Color
 
 echo -e "${YELLOW}Iniziando la risoluzione automatica dei problemi...${NC}"
 
+# Crea la cartella client se non esiste
+if [ ! -d "client" ]; then
+    echo -e "${YELLOW}Creazione della cartella client...${NC}"
+    mkdir -p client
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}Cartella client creata con successo!${NC}"
+    else
+        echo -e "${RED}Errore nella creazione della cartella client. Verificare i permessi.${NC}"
+    fi
+else
+    echo -e "${YELLOW}La cartella client esiste già.${NC}"
+fi
+
+# Crea il file client/index.html se non esiste
+if [ ! -f "client/index.html" ]; then
+    echo -e "${YELLOW}Creazione del file client/index.html...${NC}"
+    cat > client/index.html << EOL
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <title>BoxSelector - Gestione Rifiuti</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+EOL
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}File client/index.html creato con successo!${NC}"
+    else
+        echo -e "${RED}Errore nella creazione del file client/index.html. Verificare i permessi.${NC}"
+    fi
+else
+    echo -e "${YELLOW}Il file client/index.html esiste già.${NC}"
+fi
+
 # Controlla se esiste vite.config.local.ts, altrimenti crea un symlink
 if [ ! -f "vite.config.local.ts" ]; then
     echo -e "${YELLOW}Creazione del link simbolico per vite.config.local.ts...${NC}"

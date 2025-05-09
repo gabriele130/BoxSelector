@@ -2,7 +2,34 @@
 
 Dopo aver scaricato il progetto dal repository, è necessario apportare le seguenti correzioni per far funzionare correttamente l'applicazione.
 
-## 1. Correggere il file package.json
+## 1. Correggere l'errore "client/index.html not found"
+
+È stato rilevato che il server cerca il file index.html all'interno della cartella client, che potrebbe non esistere dopo il download.
+
+### Soluzione index.html
+
+1. Assicurati che esista la cartella `client` nella root del progetto
+   ```bash
+   mkdir -p client
+   ```
+
+2. Crea un file `client/index.html` con il seguente contenuto:
+   ```html
+   <!DOCTYPE html>
+   <html lang="en">
+     <head>
+       <meta charset="UTF-8" />
+       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+       <title>BoxSelector - Gestione Rifiuti</title>
+     </head>
+     <body>
+       <div id="root"></div>
+       <script type="module" src="/src/main.tsx"></script>
+     </body>
+   </html>
+   ```
+
+## 2. Correggere il file package.json
 
 È stato rilevato un errore nel file package.json che impedisce l'esecuzione corretta dell'applicazione.
 
