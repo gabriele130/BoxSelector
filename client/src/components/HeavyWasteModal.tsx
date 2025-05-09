@@ -69,19 +69,28 @@ export function HeavyWasteModal({ isOpen, onClose, onConfirm }: HeavyWasteModalP
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="bg-black border-gray-800 sm:max-w-2xl">
-        <DialogHeader>
-          <div className="flex justify-between items-center">
-            <div>
-              <DialogTitle className="text-xl font-bold text-white">Heavy Waste Types</DialogTitle>
-              <DialogDescription className="text-sm text-gray-400">
-                Specify the types and amount of heavy waste in your skip
-              </DialogDescription>
-            </div>
-            <Button variant="ghost" size="icon" onClick={onClose}>
-              <X className="h-5 w-5 text-gray-400 hover:text-white" />
+        {/* Custom Header based on screenshot */}
+        <div className="flex justify-between items-center py-4 px-1 border-b border-gray-800 mb-6">
+          <div>
+            <h2 className="text-white font-semibold text-lg">Selected Waste Types</h2>
+            <p className="text-gray-400 text-sm">Household Waste, Construction Waste and 2 more</p>
+          </div>
+          <div className="flex gap-2">
+            <Button 
+              variant="outline" 
+              className="bg-transparent text-white border-gray-700 hover:bg-gray-800"
+              onClick={onClose}
+            >
+              Back
+            </Button>
+            <Button 
+              className="bg-blue-600 hover:bg-blue-700"
+              onClick={onConfirm}
+            >
+              Continue
             </Button>
           </div>
-        </DialogHeader>
+        </div>
         
         {/* Warning Notice */}
         <div className="bg-amber-900/30 border-l-4 border-amber-500 p-4 mb-6 rounded">
@@ -218,22 +227,7 @@ export function HeavyWasteModal({ isOpen, onClose, onConfirm }: HeavyWasteModalP
         {/* Current Selection Status */}
         <div className="text-sm text-white mb-6">{getSummaryText()}</div>
         
-        {/* Action Buttons */}
-        <DialogFooter>
-          <Button
-            variant="outline"
-            className="px-4 py-2 border border-gray-700 rounded-md text-white hover:bg-gray-800"
-            onClick={onClose}
-          >
-            Cancel
-          </Button>
-          <Button
-            className="px-4 py-2 bg-primary-600 rounded-md text-white hover:bg-primary-500"
-            onClick={onConfirm}
-          >
-            Confirm Selection
-          </Button>
-        </DialogFooter>
+        {/* I bottoni di azione sono stati spostati nell'header personalizzato */}
       </DialogContent>
     </Dialog>
   );
