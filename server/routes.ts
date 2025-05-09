@@ -7,17 +7,14 @@ import { fromZodError } from "zod-validation-error";
 import path from "path";
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Aggiungi route per le pagine di debug
-  app.get("/debug", (req, res) => {
-    res.sendFile(path.resolve(process.cwd(), "src", "index-debug.html"));
+  // Aggiungiamo una pagina di debug per StackBlitz
+  app.get("/debug-stackblitz", (req, res) => {
+    res.sendFile(path.resolve(process.cwd(), "stackblitz-debug.html"));
   });
-  
-  app.get("/test", (req, res) => {
-    res.sendFile(path.resolve(process.cwd(), "src", "simple.html"));
-  });
-  
-  app.get("/minimal", (req, res) => {
-    res.sendFile(path.resolve(process.cwd(), "src", "minimal.html"));
+
+  // Aggiungiamo una pagina standalone che non richiede React
+  app.get("/standalone", (req, res) => {
+    res.sendFile(path.resolve(process.cwd(), "standalone.html"));
   });
   
   // Get all bookings

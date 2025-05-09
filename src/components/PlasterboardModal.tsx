@@ -10,8 +10,9 @@ import { Button } from "@/components/ui/button";
 import { useBooking } from "../contexts/BookingContext";
 import { useState } from "react";
 
-// Import image paths for plasterboard visual representations
-import plasterboardImage from "@assets/heavywaste-up-to-5.png";
+// Utilizziamo percorsi statici per le immagini invece di importazioni ES Module
+// Questo risolve i problemi di MIME type in StackBlitz
+import { getHeavyWasteImagePath, getHeavyWasteSvgFallback } from "@/assets/image-paths";
 
 interface PlasterboardModalProps {
   isOpen: boolean;
@@ -96,9 +97,15 @@ export function PlasterboardModal({ isOpen, onClose, onConfirm }: PlasterboardMo
               <div className="bg-white rounded-lg overflow-hidden">
                 <div className="relative py-4">
                   <img 
-                    src={plasterboardImage}
+                    src={getHeavyWasteImagePath("Up to 5%")}
                     alt={`Skip with ${bookingState.plasterboardPercentage} plasterboard`}
                     className="max-w-[250px] h-auto mx-auto"
+                    onError={(e) => {
+                      // Fallback a SVG se l'immagine non può essere caricata
+                      const target = e.target as HTMLImageElement;
+                      target.onerror = null; // Previene ricorsione infinita
+                      target.src = getHeavyWasteSvgFallback("Up to 5%");
+                    }}
                   />
                   <div className="absolute top-2 right-2 bg-blue-600 text-white text-xs px-2 py-1 rounded-full">
                     {bookingState.plasterboardPercentage}

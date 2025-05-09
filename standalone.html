@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BoxSelector - Versione Standalone</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #3b82f6;
+        }
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+        .card {
+            background-color: #111;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        .button {
+            display: inline-block;
+            background-color: #3b82f6;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            margin: 10px;
+            transition: background-color 0.2s;
+        }
+        .button:hover {
+            background-color: #2563eb;
+        }
+        .steps {
+            text-align: left;
+            margin-top: 30px;
+        }
+        .steps h2 {
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .step {
+            margin-bottom: 20px;
+            padding-left: 20px;
+            border-left: 2px solid #3b82f6;
+        }
+        .step h3 {
+            margin-bottom: 5px;
+            color: #3b82f6;
+        }
+        code {
+            display: block;
+            background-color: #1a1a1a;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: monospace;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>BoxSelector</h1>
+        <p>Piattaforma di gestione rifiuti e noleggio skip</p>
+        
+        <div class="card">
+            <h2>Versione Standalone</h2>
+            <p>Questa è una pagina HTML standalone che dimostra il funzionamento dell'applicazione BoxSelector senza richiedere React o altre dipendenze.</p>
+            <div>
+                <a href="/" class="button">Prova l'app completa</a>
+                <a href="/debug-stackblitz" class="button">Diagnostica</a>
+            </div>
+        </div>
+        
+        <div class="steps">
+            <h2>Come risolvere i problemi di rendering in StackBlitz</h2>
+            
+            <div class="step">
+                <h3>1. Verifica la struttura del progetto</h3>
+                <p>Assicurati che tutti i file principali siano presenti:</p>
+                <code>
+client/index.html
+src/main.tsx
+src/App.tsx
+src/index.css
+                </code>
+            </div>
+            
+            <div class="step">
+                <h3>2. Verifica le importazioni</h3>
+                <p>Le importazioni devono utilizzare percorsi corretti:</p>
+                <code>
+// Corretto
+import App from "./App";
+import "./index.css";
+                </code>
+            </div>
+            
+            <div class="step">
+                <h3>3. Controlla gli errori silenziosi</h3>
+                <p>Aggiungi gestione degli errori esplicita:</p>
+                <code>
+try {
+  const root = createRoot(document.getElementById("root"));
+  root.render(&lt;App /&gt;);
+} catch (error) {
+  console.error("❌ Errore React:", error);
+}
+                </code>
+            </div>
+            
+            <div class="step">
+                <h3>4. Assicurati che il server Express sia configurato correttamente</h3>
+                <p>Il server Express deve servire correttamente i file statici:</p>
+                <code>
+app.use(express.static("public"));
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "client", "index.html"));
+});
+                </code>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,4 +1,5 @@
 import { HeavyWastePercentage } from "@/contexts/BookingContext";
+import { getPublicAssetUrl, createSvgFallback } from "@/public-path-fix";
 
 // Definisci i percorsi statici alle immagini
 const heavyWasteImagePaths: Record<Exclude<HeavyWastePercentage, 'No heavy waste'>, string> = {
@@ -11,9 +12,9 @@ const heavyWasteImagePaths: Record<Exclude<HeavyWastePercentage, 'No heavy waste
 export function getHeavyWasteImagePath(percentage: HeavyWastePercentage): string {
   if (percentage === "No heavy waste") {
     // Immagine di fallback o placeholder
-    return "/attached_assets/heavywaste-up-to-5.png"; 
+    return getPublicAssetUrl("/attached_assets/heavywaste-up-to-5.png");
   }
-  return heavyWasteImagePaths[percentage];
+  return getPublicAssetUrl(heavyWasteImagePaths[percentage]);
 }
 
 // Fallback SVG in caso le immagini non siano disponibili
@@ -23,5 +24,5 @@ export function getHeavyWasteSvgFallback(percentage: HeavyWastePercentage): stri
                     percentage === "Up to 5%" ? "#666666" :
                     percentage === "5-20%" ? "#555555" : "#444444";
                     
-  return `data:image/svg+xml,%3Csvg width='200' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='198' height='98' x='1' y='1' stroke='%23333' fill='${baseColor}' stroke-width='2' rx='5' ry='5'/%3E%3Ctext x='50' y='50' font-family='Arial' font-size='16' fill='white'%3E${percentage}%3C/text%3E%3C/svg%3E`;
+  return createSvgFallback(`Heavy Waste ${percentage}`, baseColor);
 }

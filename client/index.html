@@ -4,9 +4,39 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
     <title>BoxSelector - Gestione Rifiuti</title>
+    <style>
+      /* Aggiungiamo stili di base per garantire che l'applicazione sia visibile */
+      body {
+        background-color: #000;
+        color: #fff;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+      #root {
+        min-height: 100vh;
+      }
+      /* Stile di fallback se React non rende */
+      #root:empty::before {
+        content: "Caricamento dell'applicazione...";
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        font-size: 1.5rem;
+        color: #3b82f6;
+        text-align: center;
+        padding: 2rem;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
+    
+    <!-- Aggiungiamo uno script diagnostico per StackBlitz -->
+    <script src="/stackblitz-app.js"></script>
+    
+    <!-- Main Application -->
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
