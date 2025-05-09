@@ -3,336 +3,275 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StackBlitz Debug Page</title>
+    <title>BoxSelector - Diagnostica React</title>
     <style>
         body {
-            font-family: sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #131313;
-            color: #eee;
+            background-color: #000;
+            color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
             line-height: 1.6;
         }
-        h1 { color: #3b82f6; }
-        h2 { color: #60a5fa; margin-top: 30px; }
-        pre {
-            background-color: #1e1e1e;
-            padding: 15px;
-            border-radius: 5px;
-            overflow-x: auto;
-            border-left: 3px solid #3b82f6;
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #3b82f6;
+        }
+        h2 {
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            color: #f59e0b;
+        }
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
         }
         .card {
-            background-color: #1e1e1e;
-            border-radius: 5px;
-            padding: 15px;
-            margin-bottom: 20px;
+            background-color: #111;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         }
-        button {
+        .test-card {
+            background-color: #1f2937;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+        .test-card h3 {
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+        }
+        .button {
+            display: inline-block;
             background-color: #3b82f6;
             color: white;
-            border: none;
-            padding: 8px 15px;
+            padding: 12px 24px;
             border-radius: 4px;
-            cursor: pointer;
-            margin-right: 10px;
-            margin-bottom: 10px;
+            text-decoration: none;
+            font-weight: 500;
+            margin: 10px 10px 10px 0;
+            transition: background-color 0.2s;
         }
-        button:hover {
+        .button:hover {
             background-color: #2563eb;
         }
-        .error { color: #f87171; }
-        .success { color: #34d399; }
-        .warning { color: #fbbf24; }
+        .react-test {
+            margin-bottom: 30px;
+        }
+        #react-container {
+            border: 1px dashed #666;
+            padding: 20px;
+            margin-top: 15px;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .status-indicator {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        .status-pending {
+            background-color: #f59e0b;
+        }
+        .status-success {
+            background-color: #10b981;
+        }
+        .status-error {
+            background-color: #ef4444;
+        }
+        #test-results {
+            font-family: monospace;
+            white-space: pre-wrap;
+            padding: 15px;
+            background-color: #0f172a;
+            border-radius: 4px;
+            margin-top: 15px;
+        }
+        code {
+            background-color: #1a1a1a;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
     </style>
 </head>
 <body>
-    <h1>StackBlitz React Debug Center</h1>
-    <p>Questa pagina diagnostica i problemi di avvio dell'applicazione React in StackBlitz.</p>
-    
-    <div class="card">
-        <h2>Informazioni Ambiente</h2>
-        <div id="env-info"></div>
-    </div>
-
-    <div class="card">
-        <h2>Test di base React</h2>
-        <div id="react-test-container"></div>
-        <div id="react-test-result"></div>
-        <button onclick="testReactBasic()">Test React Base</button>
-    </div>
-
-    <div class="card">
-        <h2>Test DOM e Rendering</h2>
-        <div id="dom-test-result"></div>
-        <button onclick="testDOMRender()">Test DOM</button>
-    </div>
-
-    <div class="card">
-        <h2>Test Import ESM</h2>
-        <div id="import-test-result"></div>
-        <button onclick="testImports()">Test Imports</button>
-    </div>
-
-    <div class="card">
-        <h2>Test Caricamento Moduli</h2>
-        <div id="module-loader-result"></div>
-        <button onclick="testModuleLoading()">Test Moduli</button>
-    </div>
-
-    <div class="card">
-        <h2>Console Log</h2>
-        <div id="console-container">
-            <pre id="console-output"><em>I log della console appariranno qui...</em></pre>
+    <div class="container">
+        <h1>BoxSelector Diagnostica</h1>
+        <p>Questa pagina esegue test diagnostici per identificare problemi di rendering React in StackBlitz.</p>
+        
+        <div class="card">
+            <h2>Stato dell'ambiente React</h2>
+            <div id="react-status">Verifica in corso...</div>
+            
+            <div class="react-test">
+                <h3>Test di rendering React</h3>
+                <p>Tentativo di renderizzare un componente React minimale:</p>
+                <div id="react-container">Caricamento componente React...</div>
+            </div>
+            
+            <h3>Test risultati:</h3>
+            <div id="test-results">Inizializzazione test...</div>
+            
+            <div style="margin-top: 25px;">
+                <a href="/" class="button">Torna all'app principale</a>
+                <a href="/standalone" class="button">Versione standalone</a>
+                <button id="run-tests" class="button">Esegui test di nuovo</button>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>Soluzione alternativa</h2>
+            <p>Se i test falliscono, prova questa soluzione:</p>
+            
+            <div class="test-card">
+                <h3><span class="status-indicator status-pending"></span> Carica React da CDN</h3>
+                <p>Modifica <code>client/index.html</code> per includere React e ReactDOM da CDN:</p>
+                <pre style="background-color: #1a1a1a; padding: 15px; border-radius: 4px; overflow-x: auto;"><code>&lt;!-- Aggiungi prima dei tuoi script --&gt;
+&lt;script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"&gt;&lt;/script&gt;
+&lt;script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"&gt;&lt;/script&gt;</code></pre>
+            </div>
         </div>
     </div>
-
-    <script type="module">
-        // Mostra informazioni sull'ambiente
-        const envInfo = document.getElementById('env-info');
-        const envDetails = {
-            userAgent: navigator.userAgent,
-            screenSize: `${window.innerWidth}x${window.innerHeight}`,
-            pixelRatio: window.devicePixelRatio,
-            cookiesEnabled: navigator.cookieEnabled,
-            language: navigator.language,
-            platform: navigator.platform,
-            online: navigator.onLine
-        };
-
-        let envHTML = '<pre>';
-        for (const [key, value] of Object.entries(envDetails)) {
-            envHTML += `${key}: ${value}\n`;
-        }
-        envHTML += '</pre>';
-        envInfo.innerHTML = envHTML;
-
-        // Cattura i log della console
-        const consoleOutput = document.getElementById('console-output');
-        const originalConsole = {
-            log: console.log,
-            error: console.error,
-            warn: console.warn,
-            info: console.info
-        };
-
-        function formatArg(arg) {
-            if (typeof arg === 'object') {
-                try {
-                    return JSON.stringify(arg, null, 2);
-                } catch (e) {
-                    return String(arg);
-                }
-            }
-            return String(arg);
-        }
-
-        console.log = function(...args) {
-            originalConsole.log.apply(console, args);
-            appendToConsole('log', args);
-        };
+    
+    <!-- Carica React CDN per i test diagnostici -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', runDiagnostics);
         
-        console.error = function(...args) {
-            originalConsole.error.apply(console, args);
-            appendToConsole('error', args);
-        };
+        // Aggiungi un listener al pulsante per eseguire i test di nuovo
+        document.getElementById('run-tests').addEventListener('click', runDiagnostics);
         
-        console.warn = function(...args) {
-            originalConsole.warn.apply(console, args);
-            appendToConsole('warning', args);
-        };
-        
-        console.info = function(...args) {
-            originalConsole.info.apply(console, args);
-            appendToConsole('info', args);
-        };
-
-        function appendToConsole(type, args) {
-            if (consoleOutput.innerHTML.includes('I log della console appariranno qui')) {
-                consoleOutput.innerHTML = '';
-            }
-            
-            const formattedArgs = args.map(formatArg).join(' ');
-            const logLine = `<span class="${type}">[${type.toUpperCase()}] ${formattedArgs}</span>\n`;
-            consoleOutput.innerHTML += logLine;
-            consoleOutput.scrollTop = consoleOutput.scrollHeight;
-        }
-
-        window.testReactBasic = async function() {
-            const resultContainer = document.getElementById('react-test-result');
-            resultContainer.innerHTML = '<p>Test in corso...</p>';
-            
-            try {
-                const React = await import('react');
-                const ReactDOM = await import('react-dom');
-                const reactContainer = document.getElementById('react-test-container');
-                
-                const App = React.createElement('div', {
-                    style: {
-                        backgroundColor: '#3b82f6',
-                        color: 'white',
-                        padding: '10px',
-                        borderRadius: '4px',
-                        marginBottom: '10px'
-                    }
-                }, 'React funziona correttamente!');
-                
-                ReactDOM.render(App, reactContainer);
-                
-                resultContainer.innerHTML = `
-                    <p class="success">✅ React caricato correttamente</p>
-                    <p>Versione React: ${React.version}</p>
-                `;
-            } catch (error) {
-                resultContainer.innerHTML = `
-                    <p class="error">❌ Errore durante il caricamento di React</p>
-                    <pre>${error.message}\n${error.stack}</pre>
-                `;
-                console.error('React test error:', error);
-            }
-        };
-
-        window.testDOMRender = function() {
-            const resultContainer = document.getElementById('dom-test-result');
-            resultContainer.innerHTML = '<p>Test in corso...</p>';
-            
-            try {
-                // Controlla elementi chiave
-                const rootElement = document.getElementById('root');
-                const rootStatus = rootElement ? 'trovato' : 'non trovato';
-                
-                // Test di renderizzazione DOM base
-                const testElement = document.createElement('div');
-                testElement.textContent = 'Test DOM elementare';
-                testElement.style.backgroundColor = '#3b82f6';
-                testElement.style.color = 'white';
-                testElement.style.padding = '10px';
-                testElement.style.borderRadius = '4px';
-                testElement.style.marginTop = '10px';
-                
-                resultContainer.appendChild(testElement);
-                
-                resultContainer.innerHTML += `
-                    <p class="success">✅ Test DOM riuscito</p>
-                    <p>Elemento root: <span class="${rootStatus === 'trovato' ? 'success' : 'error'}">${rootStatus}</span></p>
-                `;
-                
-                if (!rootElement) {
-                    resultContainer.innerHTML += `
-                        <p class="warning">⚠️ L'elemento root non è presente nel DOM. Questo è essenziale per il rendering React.</p>
-                    `;
-                }
-            } catch (error) {
-                resultContainer.innerHTML = `
-                    <p class="error">❌ Errore durante il test DOM</p>
-                    <pre>${error.message}\n${error.stack}</pre>
-                `;
-                console.error('DOM test error:', error);
-            }
-        };
-
-        window.testImports = async function() {
-            const resultContainer = document.getElementById('import-test-result');
-            resultContainer.innerHTML = '<p>Test in corso...</p>';
+        function runDiagnostics() {
+            const testResults = document.getElementById('test-results');
+            testResults.textContent = "Esecuzione test...";
             
             const results = [];
+            let overallStatus = "success";
             
+            // Test 1: Verifica se React è disponibile
             try {
-                // Test di importazioni comuni
-                try {
-                    const React = await import('react');
-                    results.push({ name: 'react', status: 'success', version: React.version });
-                } catch (e) {
-                    results.push({ name: 'react', status: 'error', error: e.message });
+                if (typeof React !== 'undefined') {
+                    results.push(`✅ React è disponibile (versione ${React.version})`);
+                } else {
+                    results.push("❌ React non è disponibile globalmente");
+                    overallStatus = "error";
                 }
-                
-                try {
-                    const ReactDOM = await import('react-dom');
-                    results.push({ name: 'react-dom', status: 'success', version: ReactDOM.version });
-                } catch (e) {
-                    results.push({ name: 'react-dom', status: 'error', error: e.message });
-                }
-                
-                // Render risultati
-                let resultsHTML = '<ul style="list-style: none; padding: 0;">';
-                results.forEach(result => {
-                    resultsHTML += `
-                        <li style="margin-bottom: 5px;">
-                            <span class="${result.status === 'success' ? 'success' : 'error'}">
-                                ${result.status === 'success' ? '✅' : '❌'}
-                            </span>
-                            <strong>${result.name}</strong>: 
-                            ${result.status === 'success' 
-                                ? `caricato correttamente ${result.version ? `(v${result.version})` : ''}` 
-                                : `errore - ${result.error}`}
-                        </li>
-                    `;
-                });
-                resultsHTML += '</ul>';
-                
-                resultContainer.innerHTML = resultsHTML;
-            } catch (error) {
-                resultContainer.innerHTML = `
-                    <p class="error">❌ Errore generale durante i test di importazione</p>
-                    <pre>${error.message}\n${error.stack}</pre>
-                `;
-                console.error('Import test error:', error);
+            } catch (e) {
+                results.push(`❌ Errore durante il test di React: ${e.message}`);
+                overallStatus = "error";
             }
-        };
-
-        window.testModuleLoading = async function() {
-            const resultContainer = document.getElementById('module-loader-result');
-            resultContainer.innerHTML = '<p>Test in corso...</p>';
             
+            // Test 2: Verifica se ReactDOM è disponibile
             try {
-                // Test caricamento dinamico
-                const testModuleURL = '/src/main.tsx'; // o altro modulo principale
-                const moduleStatus = document.createElement('p');
-                moduleStatus.textContent = `Tentativo di caricare: ${testModuleURL}`;
-                resultContainer.innerHTML = '';
-                resultContainer.appendChild(moduleStatus);
+                if (typeof ReactDOM !== 'undefined') {
+                    results.push(`✅ ReactDOM è disponibile (versione ${ReactDOM.version})`);
+                } else {
+                    results.push("❌ ReactDOM non è disponibile globalmente");
+                    overallStatus = "error";
+                }
+            } catch (e) {
+                results.push(`❌ Errore durante il test di ReactDOM: ${e.message}`);
+                overallStatus = "error";
+            }
+            
+            // Test 3: Verifica l'elemento root nella pagina principale
+            try {
+                const rootCheckResult = checkRootElement();
+                results.push(rootCheckResult.message);
+                if (!rootCheckResult.success) {
+                    overallStatus = "error";
+                }
+            } catch (e) {
+                results.push(`❌ Errore durante il controllo dell'elemento root: ${e.message}`);
+                overallStatus = "error";
+            }
+            
+            // Test 4: Prova a renderizzare un componente React minimal
+            try {
+                const reactContainer = document.getElementById('react-container');
                 
-                try {
-                    const testScript = document.createElement('script');
-                    testScript.type = 'module';
-                    testScript.src = testModuleURL;
-                    
-                    // Tracking
-                    testScript.onload = () => {
-                        moduleStatus.className = 'success';
-                        moduleStatus.textContent = `✅ Modulo ${testModuleURL} caricato correttamente`;
+                // Crea un componente React semplice
+                const TestComponent = React.createElement('div', { 
+                    style: { 
+                        padding: '15px', 
+                        backgroundColor: '#3b82f6', 
+                        color: 'white',
+                        borderRadius: '4px'
+                    } 
+                }, 'Questo è un componente React di test');
+                
+                // Rendering del componente
+                ReactDOM.render(TestComponent, reactContainer);
+                
+                results.push("✅ Rendering del componente React riuscito");
+            } catch (e) {
+                results.push(`❌ Errore durante il rendering di React: ${e.message}`);
+                overallStatus = "error";
+            }
+            
+            // Aggiorna stato React
+            updateReactStatus(overallStatus);
+            
+            // Aggiorna lo spazio test con i risultati
+            testResults.textContent = results.join('\n');
+        }
+        
+        function checkRootElement() {
+            try {
+                // Verifica se siamo nella pagina principale
+                const rootElement = document.getElementById('root');
+                if (!rootElement) {
+                    return { 
+                        success: false, 
+                        message: "⚠️ L'elemento #root non esiste in questa pagina (normale per la pagina di diagnostica)" 
                     };
-                    
-                    testScript.onerror = (e) => {
-                        moduleStatus.className = 'error';
-                        moduleStatus.textContent = `❌ Errore caricamento modulo ${testModuleURL}: ${e.type}`;
-                        console.error('Module loading error:', e);
-                    };
-                    
-                    document.body.appendChild(testScript);
-                    
-                    resultContainer.innerHTML += `
-                        <p>Tentativo di caricamento in corso...</p>
-                        <p class="warning">⚠️ Controlla la console per eventuali errori CORS o sintassi</p>
-                    `;
-                } catch (e) {
-                    moduleStatus.className = 'error';
-                    moduleStatus.textContent = `❌ Eccezione durante tentativo di caricamento: ${e.message}`;
                 }
                 
-            } catch (error) {
-                resultContainer.innerHTML = `
-                    <p class="error">❌ Errore durante il test di caricamento moduli</p>
-                    <pre>${error.message}\n${error.stack}</pre>
-                `;
-                console.error('Module loader test error:', error);
+                if (rootElement.children.length === 0) {
+                    return { 
+                        success: false, 
+                        message: "❌ L'elemento #root nella pagina principale è vuoto" 
+                    };
+                }
+                
+                return { 
+                    success: true, 
+                    message: "✅ L'elemento #root nella pagina principale ha contenuto" 
+                };
+            } catch (e) {
+                return { 
+                    success: false, 
+                    message: `❌ Errore durante il controllo dell'elemento root: ${e.message}` 
+                };
             }
-        };
-
-        // Log versione pagina
-        console.log('StackBlitz Debug Page loaded at', new Date().toLocaleString());
-        console.log('Esegui i test facendo clic sui pulsanti in alto');
+        }
+        
+        function updateReactStatus(status) {
+            const statusElement = document.getElementById('react-status');
+            const statusClasses = {
+                pending: "Test in esecuzione...",
+                success: "✅ React funziona correttamente in questa pagina",
+                error: "❌ Ci sono problemi con React in questo ambiente"
+            };
+            
+            statusElement.textContent = statusClasses[status];
+        }
     </script>
 </body>
 </html>

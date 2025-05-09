@@ -1,4 +1,3 @@
-import { createRoot } from "react-dom/client";
 import App from "./App";
 import "./index.css";
 
@@ -13,9 +12,25 @@ import "./index.css";
       throw new Error("Elemento DOM #root non trovato");
     }
     
-    // Creiamo e rendiamo l'applicazione con error handling
-    const root = createRoot(rootElement);
-    root.render(<App />);
+    // Supporta sia la versione importata che la versione globale di React
+    // Questo è importante per StackBlitz dove React potrebbe essere caricato da CDN
+    const reactDOM = window.ReactDOM || require("react-dom");
+    const react = window.React || require("react");
+    
+    console.log(`Versione React: ${react?.version || 'non disponibile'}`);
+    console.log(`Versione ReactDOM: ${reactDOM?.version || 'non disponibile'}`);
+    
+    // Usa ReactDOM.render per compatibilità con entrambi gli approcci
+    if (reactDOM.createRoot) {
+      // React 18+
+      const root = reactDOM.createRoot(rootElement);
+      root.render(react.createElement(App));
+    } else if (reactDOM.render) {
+      // React 17 e precedenti o versione CDN
+      reactDOM.render(react.createElement(App), rootElement);
+    } else {
+      throw new Error("Metodi di rendering React non disponibili");
+    }
     
     console.log("✅ BoxSelector React App renderizzata con successo");
   } catch (error) {

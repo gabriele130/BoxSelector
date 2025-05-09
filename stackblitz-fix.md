@@ -5,43 +5,61 @@ Abbiamo apportato diverse modifiche per risolvere il problema della pagina bianc
 ## Diagnostica e risoluzione
 
 ### Problemi identificati:
-1. **Errori silenziosi nell'inizializzazione React** - Gli errori non venivano mostrati nell'UI
-2. **Importazioni di immagini con MIME type errato** - Le importazioni dirette di file PNG causavano errori
-3. **Mancanza di gestione errori nel punto di entrata** - Il file main.tsx non aveva try/catch
+1. **React non disponibile globalmente** - In StackBlitz, React non viene caricato come variabile globale
+2. **Errori silenziosi nell'inizializzazione React** - Gli errori non venivano mostrati nell'UI
+3. **Importazioni di immagini con MIME type errato** - Le importazioni dirette di file PNG causavano errori
 
 ### Soluzioni implementate:
 
-1. **Script di diagnostica**
+1. **Caricamento React da CDN**
+   - Aggiunto script per caricare React e ReactDOM da unpkg CDN
+   - Modificato `main.tsx` per supportare sia la versione importata che la versione globale
+
+2. **Script di diagnostica**
    - Aggiunto `stackblitz-app.js` che crea un pannello di diagnostica
    - Aggiunto handler di errori globali per catturare eccezioni non gestite
 
-2. **Pagine di diagnostica e fallback**
+3. **Pagine di diagnostica e fallback**
    - `/debug-stackblitz` - Pagina completa di diagnostica con test React
    - `/standalone` - Versione statica HTML dell'app che non richiede React
 
-3. **Gestione errori nell'inizializzazione**
-   - Modificato `main.tsx` per utilizzare try/catch e mostrare errori nell'UI
-   - Aggiunto messaggio di fallback quando l'elemento root è vuoto
+4. **Server alternativo per StackBlitz**
+   - Creato `server/server-stackblitz.js` come versione semplificata del server
+   - Aggiunto supporto per servire i file statici e le rotte API fondamentali
 
-4. **Correzione problemi MIME type per le immagini**
-   - Sostituito importazioni ES Module con URL statici 
-   - Aggiunto `getPublicAssetUrl` per gestire le URL delle risorse
-   - Implementato `onError` handler con fallback SVG
+## Come utilizzare
 
-## Come verificare
+1. **Per l'applicazione principale:**
+   ```
+   node server/server-stackblitz.js
+   ```
 
-1. Apri l'applicazione principale. Se vedi una pagina bianca:
+2. **Pagine di diagnostica:**
+   - `/debug-stackblitz` - Test di compatibilità React
+   - `/standalone` - Versione HTML statica
 
-2. Prova ad accedere a `/standalone` per vedere una versione statica dell'app
+3. **Se persistono problemi:**
+   - Controlla la console del browser per errori specifici
+   - Verifica che React e ReactDOM siano caricati correttamente dalla CDN
+   - Prova a usare il server semplificato anziché quello TypeScript
 
-3. Accedi a `/debug-stackblitz` per eseguire test diagnostici React
+## Funzionamento della soluzione
 
-4. Controlla la console del browser per eventuali errori
+La soluzione carica React sia attraverso l'importazione ES Module standard che tramite CDN. Il codice di inizializzazione in `main.tsx` ora verifica se React è disponibile come variabile globale (caricato da CDN) o se deve essere importato tramite require/import.
 
-## Prossimi passi se persiste il problema
+```javascript
+const reactDOM = window.ReactDOM || require("react-dom");
+const react = window.React || require("react");
 
-1. Considera di ricostruire l'applicazione con React caricato da CDN anziché moduli ES
+// Usa il metodo di rendering appropriato
+if (reactDOM.createRoot) {
+  // React 18+
+  const root = reactDOM.createRoot(rootElement);
+  root.render(react.createElement(App));
+} else if (reactDOM.render) {
+  // React 17 e precedenti o versione CDN
+  reactDOM.render(react.createElement(App), rootElement);
+}
+```
 
-2. Verifica che tutti i file vengano correttamente serviti dal server (controlla i percorsi)
-
-3. Prova a usare una versione minima dell'app rimuovendo componenti complessi
+Questo approccio garantisce la massima compatibilità in diversi ambienti.
