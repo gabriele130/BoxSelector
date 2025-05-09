@@ -167,7 +167,7 @@ export function HeavyWasteModal({ isOpen, onClose, onConfirm }: HeavyWasteModalP
           {bookingState.heavyWastePercentage !== "No heavy waste" && (
             <div className="mb-6">
               <label className="block text-sm font-medium mb-3 text-white">Visual representation:</label>
-              <div className="bg-gray-900 rounded-lg overflow-hidden">
+              <div className="bg-white rounded-lg overflow-hidden">
                 <div className="relative py-4">
                   <img 
                     src={getSkipImageForPercentage(bookingState.heavyWastePercentage)}
@@ -186,27 +186,30 @@ export function HeavyWasteModal({ isOpen, onClose, onConfirm }: HeavyWasteModalP
           {bookingState.heavyWasteTypes.length > 0 && (
             <div className="mb-6">
               <label className="block text-sm font-medium mb-3 text-white">Selected heavy waste types:</label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 gap-2">
                 {bookingState.heavyWasteTypes.map(wasteType => (
-                  <div key={wasteType} className="bg-gray-900 rounded-lg p-3">
+                  <div key={wasteType} className="bg-gray-900 rounded-lg p-4">
                     <div className="font-medium text-white">{wasteType}</div>
-                    <div className="text-xs text-gray-400">{heavyWasteDescriptions[wasteType]}</div>
+                    <div className="text-sm text-gray-400">{heavyWasteDescriptions[wasteType]}</div>
                   </div>
                 ))}
               </div>
             </div>
           )}
           
-          {/* Next Step Note */}
-          <div className="mb-6 bg-gray-900 p-4 rounded-lg">
-            <p className="text-sm text-white">
-              In the next step, you'll be able to select a skip size based on your waste type and heavy waste specifications.
-            </p>
-            <ul className="mt-2 text-xs text-gray-400 space-y-1 list-disc pl-4">
-              <li>Skips up to 8 yards can hold heavy waste</li>
-              <li>Prices vary based on skip size and waste type</li>
-              <li>Skip availability depends on your location</li>
-            </ul>
+          {/* Skip Size Restrictions Notice */}
+          <div className="bg-blue-900/30 border-l-4 border-blue-600 rounded-lg p-4 mb-6">
+            <div className="flex">
+              <div className="flex-shrink-0">
+                <Info className="h-5 w-5 text-blue-500" />
+              </div>
+              <div className="ml-3">
+                <p className="text-sm font-medium text-white">Skip Size Restrictions</p>
+                <p className="text-sm text-white mt-1">
+                  For safety reasons, heavy waste can only be disposed of in skips up to 8 yards. Larger skips will not be available if heavy waste is selected.
+                </p>
+              </div>
+            </div>
           </div>
           
           {/* Current Selection Status */}
